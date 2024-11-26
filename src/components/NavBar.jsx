@@ -4,10 +4,8 @@ function NavBar() {
   return (
     <div>
       <nav>
-        <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/project">Project</Link></li>
-        </ul>
+        <Link to="/">Home</Link>
+        <Link to="/login">Log In</Link>
       </nav>
       <Outlet />
     </div>
