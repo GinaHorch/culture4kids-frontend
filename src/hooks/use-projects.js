@@ -14,11 +14,18 @@ export default function useProjects() {
   // This useEffect will only run once, when the component this hook is used in is mounted.
   useEffect(() => {
     getProjects()
-      .then((projects) => {
-        setProjects(projects);
+      .then((response) => {
+        console.log("Full response from backend:", response); // Log the full response
+        if (response?.results && Array.isArray(response.results)) {
+          setProjects(response.results); // Use the `results` key
+        } else {
+          console.error("Unexpected response format:", response);
+          setProjects([]); // Fallback to an empty array
+        }
         setIsLoading(false);
       })
       .catch((error) => {
+        console.error("Error fetching projects:", error);
         setError(error);
         setIsLoading(false);
       });
