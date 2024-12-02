@@ -1,0 +1,15 @@
+#project-list {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.projectCard {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #fff;
+}
