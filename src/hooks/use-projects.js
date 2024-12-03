@@ -2,13 +2,10 @@ import { useState, useEffect, useRef } from "react"; // Added useRef for caching
 import getProjects from "../api/get-projects";
 
 export default function useProjects() {
-  // Here we use the useState hook to create a state variable called projects and a function to update it called setProjects.
   const [projects, setProjects] = useState([]);
-
   // We also create a state variable called isLoading and error to keep track of the loading state and any errors that might occur.
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
-
   // Cache reference to store API response
   const cacheRef = useRef(null);
 
@@ -66,22 +63,7 @@ const refetch = debounce(() => {
   // We use the useEffect hook to fetch the projects from the API and update the state variables accordingly.
   // This useEffect will only run once, when the component this hook is used in is mounted.
   useEffect(() => {
-    fetchProjects()
-      .then((response) => {
-        console.log("Full response from backend:", response); // Log the full response
-        if (response?.results && Array.isArray(response.results)) {
-          setProjects(response.results); // Use the `results` key
-        } else {
-          console.error("Unexpected response format:", response);
-          setProjects([]); // Fallback to an empty array
-        }
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching projects:", error);
-        setError(error);
-        setIsLoading(false);
-      });
+    fetchProjects();      
   }, []); // Empty dependency array ensures this runs only on mount
 
   // Finally, we return the state variables and functions for external use

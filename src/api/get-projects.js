@@ -4,11 +4,12 @@ async function getProjects() {
 
     // Next we call the fetch function and pass in the url and the method. The method is set to `GET` because we are fetching data. Fetch returns a "promise".
     // If the promise "resolves" (i.e., if the back end responds) we will get the data we need in the `response` variable. If the back end fails to respond then we'll get an error.
-    const response = await fetch(url, { method: "GET" });
+    try {
+      const response = await fetch(url, { method: "GET" });
 
     // We can use the `ok` property on `response` to check if the request was successful.
     // If the request was not successful then we will throw an error...
-    if (!response.ok) {
+      if (!response.ok) {
         const fallbackError = "Error fetching projects";
 
       // Here we use the `await` keyword to signal to Javascript that it shouldn't run this code until `response` gets turned into JSON
@@ -27,6 +28,10 @@ async function getProjects() {
     // ...on the other hand, if the request was successful then we will return the data from the response. 
     // Turing the response to JSON takes time so we need to use the `await` keyword again.
     return await response.json();
+ } catch (error) {
+   console.error("Error in getProjects:", error);
+   throw error;
+ }
 }
 
 export default getProjects;
