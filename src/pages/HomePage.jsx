@@ -22,22 +22,29 @@ function HomePage() {
     console.log("Projects data:", projects);
 
     return (
+      // Container for the project list
         <div id="project-list" role="list" className={styles.projectList}>
           {isLoading && <LoadingState />}
+
           {error && <ErrorState message={error.message} onRetry={refetch}/>} 
-          {!isLoading && !error && Array.isArray(projects) ? (
-            projects.map((projectData, key) => {
-              return (
-                <div key={projectData.id} role="listitem" className={styles.ProjectCard}>
-                  <ProjectCard projectData={projectData} />;
+
+          {!isLoading && !error ? (
+            Array.isArray(projects) && projects.length > 0 ? (
+            projects.map((projectData) => (
+              <div 
+                 key={projectData.id} 
+                 role="listitem" 
+                 className={styles.projectCard}
+                 >
+                  <ProjectCard projectData={projectData} />
                 </div>
-              );
-            })
-          ) : (
+              ))
+            ) : (
             <p>No projects available</p> // Fallback in case `projects` is not an array
-          )}
-        </div>
-      );
+          )
+        ) : null} 
+      </div>
+    );
   }
 
 export default HomePage;

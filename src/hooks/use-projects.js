@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from "react"; // Added useRef for caching
-
 import getProjects from "../api/get-projects";
 
 export default function useProjects() {
-  // Here we use the useState hook to create a state variable called projects and a function to update it called setProjects. We initialize the state variable with an empty array.
+  // Here we use the useState hook to create a state variable called projects and a function to update it called setProjects.
   const [projects, setProjects] = useState([]);
 
   // We also create a state variable called isLoading and error to keep track of the loading state and any errors that might occur.
@@ -13,8 +12,8 @@ export default function useProjects() {
   // Cache reference to store API response
   const cacheRef = useRef(null);
 
-  // Function to fetch projects with caching
-  const fetchProjects = () => {
+  // Function to fetch projects from the backend with caching logic. 
+  const fetchProjects = async () => {
     // Check if data is already cached
     if (cacheRef.current) {
       console.log("Using cached projects data");
@@ -23,28 +22,30 @@ export default function useProjects() {
       return;
     }
   
-  // Make API call if no cache
+    // Make API call if no cache exists
     setIsLoading(true);
-    getProjects()
-        .then((response) => {
-          console.log("Full response from backend:", response); // Log the full response
-          if (response?.results && Array.isArray(response.results)) {
-            cacheRef.current = response.results; // Cache the results
-            setProjects(response.results); // Use the `results` key
-          } else {
-            console.error("Unexpected response format:", response);
-            setProjects([]); // Fallback to an empty array
-          }
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching projects:", error);
-          setError(error);
-          setIsLoading(false);
-        });
-    };
+    try {
+      console.log("Fetching projects from API...");
+      const response = await getProjects(); // Fetch projects from backend
+      console.log("Full response from backend:", response); // Debug full response
+
+      // Ensure the response has a `results` key and it's an array
+      if (response?.results && Array.isArray(response.results)) {
+        cacheRef.current = response.results; // Cache the results
+        setProjects(response.results); // Update state with project data
+      } else {
+        console.error("Unexpected response format:", response);
+        setProjects([]); // Fallback to an empty array in case of unexpected format
+      }
+    } catch (error) {
+      console.error("Error fetching projects:", error); // Log error
+      setError(error); // Update error state
+    } finally {
+      setIsLoading(false); // Always end the loading state
+    }
+  };
   
-// Debounce mechanism (if needed for rapid re-fetch scenarios)
+// Debounce mechanism to handle rapid re-fetch scenarios
 const debounce = (func, delay) => {
   let timeout;
   return (...args) => {
@@ -57,6 +58,7 @@ const debounce = (func, delay) => {
 
 // Function to refetch projects, wrapped in debounce
 const refetch = debounce(() => {
+  console.log("Clearing cache and refetching projects...");
   cacheRef.current = null; // Clear cache before re-fetching
   fetchProjects();
 }, 300); // Adjust debounce delay as needed
@@ -80,8 +82,8 @@ const refetch = debounce(() => {
         setError(error);
         setIsLoading(false);
       });
-  }, []);
+  }, []); // Empty dependency array ensures this runs only on mount
 
-  // Finally, we return the state variables and the error. As the state in this hook changes it will update these values and the component using this hook will re-render.
+  // Finally, we return the state variables and functions for external use
   return { projects, isLoading, error, refetch };
 }
