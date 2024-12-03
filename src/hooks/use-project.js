@@ -8,17 +8,24 @@ export default function useProject(projectId) {
   const [error, setError] = useState();
 
   console.log("Project data:", project);
+  
   useEffect(() => {
-    // Here we pass the projectId to the getProject function.
-    getProject(projectId)
-      .then((project) => {
-        setProject(project);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setIsLoading(false);
-      });
+    // Reset loading and error state when projectId changes
+    setIsLoading(true);
+    setError(undefined);
+
+    const fetchProject = async () => {
+      try {
+        const project = await getProject(projectId); // Fetch the project data
+        setProject(project); // Update project state
+      } catch (error) {
+        setError(error); // Capture errors
+      } finally {
+        setIsLoading(false); // End the loading state
+      }
+    };
+
+    fetchProject();
 
     // This time we pass the projectId to the dependency array so that the hook will re-run if the projectId changes.
   }, [projectId]);
