@@ -1,4 +1,7 @@
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/projects/`;
+
 async function getProjects(url) {
+    console.log("Fetching projects from:", url);
     try {
         const response = await fetch(url, { method: "GET" });
 
