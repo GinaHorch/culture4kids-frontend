@@ -5,12 +5,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // Here we import out pages
 import HomePage from "./pages/HomePage";
 import ProjectPage from "./pages/ProjectPage";
-import LoginPage from "./pages/LoginPage.jsx";
-
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 // Here we import our components
-import NavBar from "./components/NavBar.jsx";
-import { AuthProvider } from "./components/AuthProvider.jsx";
-import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import NavBar from "./components/NavBar";
+import { AuthProvider } from "./components/AuthProvider";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 // Here we create our router and tell it whats pages to render at what path
 const router = createBrowserRouter([
@@ -22,7 +22,9 @@ const router = createBrowserRouter([
      children: [
           { path: "/", element: <HomePage /> },
           { path: "/login", element: <LoginPage /> },
+          { path: "/signup", element: <SignupPage /> },
           { path: "/projects/:id", element: <ProjectPage /> },
+          { path: "*", element: <h1>404 Not Found</h1> },
      ],
   },
 ]);
