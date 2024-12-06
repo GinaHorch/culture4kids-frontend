@@ -7,78 +7,111 @@ body {
   
 .signup-page {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: url('../assets/BackgroundArt.webp');
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    position: relative; /* Needed for overlay */
   }
-  
-.signup-modal {
-    background: white;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
+
+.signup-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Black with 60% opacity */
+    z-index: 0; /* Ensure it stays behind the content */
   }
-  
-h2 {
+
+.signup-page h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
     color: #333;
   }
-  
-.form {
+
+.signup-page h1, .signup-page p {
+    color: #ffffff; /* White text for contrast */
+    z-index: 1; /* Ensure content is above the overlay */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Adds subtle shadow for readability */
+  }
+
+.signup-page form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    z-index: 1; /* Ensure it's above the overlay */
   }
-  
-label {
-    text-align: left;
-    color: #555;
+
+.signup-page label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333; /* Subtle color for text */
   }
-  
-input {
+
+.signup-page div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Ensures labels are aligned with inputs */
+  }
+
+.signup-page p {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+
+.signup-page input, .signup-page select, .signup-page button {
+    border-color: #6200ea; /* Highlight on focus */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 1rem;
+    width: 100%; /* Ensures all inputs are the same width */
+    box-sizing: border-box; /* Prevents padding from affecting element width */
   }
-  
-.form-btn {
-    background-color: #5a67d8;
+
+.signup-page input:focus, .signup-page select:focus, .signup-page button:focus {
+    outline: none;
+    border-color: #6200ea; /* Highlight color on focus */
+    box-shadow: 0 0 5px rgba(98, 0, 234, 0.5); /* Add subtle glow */
+  }  
+
+.signup-page button {
+    background: #6200ea;
     color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Adds some space above the button */
   }
   
-.form-btn:hover {
-    background-color: #434190;
+.signup-page button:hover {
+    background: #4500b3;
   }
-  
-.toggle-form-btn {
-    background: none;
-    border: none;
-    color: #5a67d8;
-    text-decoration: underline;
-    cursor: pointer;
+
+.signup-page button:active {
+    transform: scale(0.98); /* Slight press effect */
   }
+
+@media (max-width: 600px) {
+    .signup-page form, .project-card {
+      width: 90%;
+    }
   
-.toggle-form-btn:hover {
-    color: #434190;
-  }
-  
-.logout-section {
-    text-align: center;
-  }
-  
-.logout-btn {
-    background-color: #e53e3e;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-.logout-btn:hover {
-    background-color: #c53030;
+    .navigation-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
   }
