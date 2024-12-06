@@ -5,7 +5,7 @@ import postSignup from "../api/post-signup.js";
 
 // Schema validation for signup
 const signupSchema = z.object({
-  username: z.string().min(1, { message: "Username is required" }),
+    username: z.string().min(1, { message: "Username is required" }),
     email: z.string().email({ message: "Invalid email address" }),
     password: z.string().min(8, { message: "Password must be at least 8 characters" }),
     confirmPassword: z.string().min(8, { message: "Please confirm your password" }),
