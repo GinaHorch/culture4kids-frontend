@@ -1,4 +1,4 @@
-export const allProjects = [
+const projects = [
     {
       id: 1,
       title: "Project One",
@@ -30,7 +30,7 @@ export const allProjects = [
 			target_amount: 5000,
 			current_amount: 0,
 			organisation: 69,
-			image_url: "(src/assets/DanceGroup.webp)",
+			image_url: "src/assets/DanceGroup.webp",
 			date_created: "2024-12-02T08:08:07.362174Z",
 			location: "Perth",
 			is_open: true,
@@ -38,3 +38,5 @@ export const allProjects = [
 			category: 2
 		},
 ];
+
+export default projects;

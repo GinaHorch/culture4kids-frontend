@@ -2,7 +2,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import useProject from "../hooks/use-project";
 import { calculatePledges } from "../utils/projectUtils";
-import { projects } from "../data";
 import "./ProjectPage.css";
 
 function ProjectPage() {
@@ -12,7 +11,7 @@ function ProjectPage() {
       const { project, isLoading, error } = useProject(id);    
 
       if (isLoading) {
-            return (<p>loading project details...</p>)
+            return (<p>Loading project details...</p>)
       }
         
       if (error) {
@@ -29,6 +28,12 @@ function ProjectPage() {
 
       return (
         <div className="project-page">
+          <img
+            src={project.image || "placeholder.jpg"} // Use placeholder if no image is provided
+            alt={`${project.title} main image`}
+            className="project-main-image"
+          />
+          
           <header className="project-header">
             <h1 className="project-title">{project.title}</h1>
             <p className="project-status">

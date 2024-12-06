@@ -5,7 +5,7 @@
     margin-top: 20px;
   }
   
-  .navigation-buttons button {
+.navigation-buttons button {
     padding: 10px 20px;
     background: #6200ea;
     color: white;
@@ -15,7 +15,15 @@
     font-weight: bold;
   }
   
-  .navigation-buttons button:hover {
+.navigation-buttons button:hover {
     background: #4500b3;
+  }
+
+.project-main-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
   }
   

@@ -13,7 +13,11 @@ function ProjectCard(props) {
   return (
     <div className="project-card">
       <Link to={projectLink}>
-        <img src={projectData.image} alt={`${projectData.title} thumbnail`} />
+        <img 
+          src={projectData.image || "placeholder.jpg"} 
+          alt={`${projectData.title} thumbnail`}
+          className="project-image" 
+        />
         <h3>{projectData.title}</h3>
         <p>Goal: ${projectData.target_amount}</p>
         <p>Total Pledged: ${totalPledges}</p>
