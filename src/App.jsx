@@ -12,7 +12,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/signup" element={<SignupPage />} />
-                <Route path="/login" element={<LoginPage />} />                
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="*" element={<h1>404 Not Found (Frontend)</h1>} />                
             </Routes>
         </Router>
     );
