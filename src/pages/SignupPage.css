@@ -5,14 +5,14 @@ body {
     padding: 0;
   }
   
-.login-page {
+.signup-page {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
   }
   
-.login-modal {
+.signup-modal {
     background: white;
     padding: 20px 30px;
     border-radius: 10px;
