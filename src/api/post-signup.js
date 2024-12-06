@@ -3,6 +3,11 @@ import axios from "axios"; // Use axios for making HTTP requests
 // Define the base URL for the API
 const API_BASE_URL = "https://culture4kids-7a814d1e1904.herokuapp.com/"; // add after debugging if everything works process.env.REACT_APP_API_BASE_URL || 
 
+const response = await axios.post(
+  "https://culture4kids-7a814d1e1904.herokuapp.com/signup/",
+  signupData
+);
+
 async function postSignup(signupData) {
   try {
     // Send the signup request to the backend
