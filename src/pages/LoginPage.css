@@ -97,7 +97,7 @@ body {
 .toggle-form-button:hover {
   color: #ffffff;
   background-color: #6200ea; /* Add a solid background color for better readability */
-  padding: 8px 12px; /* Add padding for a button-like feel */
+  padding: 12px; /* Add padding for a button-like feel */
   border-radius: 5px; /* Rounded edges for consistency */
 }
 

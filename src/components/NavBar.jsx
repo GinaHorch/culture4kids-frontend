@@ -22,15 +22,26 @@ function NavBar() {
     <div>
       <nav>
         <ul>
-          <li><Link to="/">Home</Link></li>       
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/projects">Projects</Link>
+          </li>       
           {auth.token ? (
             <>
-              <li><Link to="/" onClick={handleLogout}>Log Out</Link></li>
+              <li>
+                <Link to="/" onClick={handleLogout}>Log Out</Link>
+              </li>
             </>
           ) : (
             <>
-              <li><Link to="/login">Login</Link></li>
-              <li><Link to="/signup">Sign Up</Link></li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/signup">Sign Up</Link>
+              </li>
             </>
           )}
         </ul>

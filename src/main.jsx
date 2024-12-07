@@ -5,12 +5,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // Here we import out pages
 import HomePage from "./pages/HomePage";
 import ProjectPage from "./pages/ProjectPage";
+import ProjectsPage from "./pages/ProjectsPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 // Here we import our components
 import NavBar from "./components/NavBar";
 import { AuthProvider } from "./components/AuthProvider";
 import ErrorBoundary from "./components/ErrorBoundary";
+import CreateProjectForm from "./components/CreateProjectForm";
 
 // Here we create our router and tell it whats pages to render at what path
 const router = createBrowserRouter([
@@ -23,7 +25,10 @@ const router = createBrowserRouter([
           { path: "/", element: <HomePage /> },
           { path: "/login", element: <LoginPage /> },
           { path: "/signup", element: <SignupPage /> },
-          { path: "/projects/:id", element: <ProjectPage /> },
+          { path: "/projects", element: <ProjectsPage /> },
+          { path: "/projects/:id", element: <ProjectCard /> },
+          { path: "/project", element: <ProjectPage /> },
+          { path: "/create-project", element: <CreateProjectForm /> },
           { path: "*", element: <h1>404 Not Found</h1> },
      ],
   },
