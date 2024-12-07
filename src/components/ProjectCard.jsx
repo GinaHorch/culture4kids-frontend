@@ -4,6 +4,12 @@ import "./ProjectCard.css";
 
 function ProjectCard(props) {
   const { projectData } = props;
+
+  if (!projectData) {
+    console.error("Missing project data:", props);
+    return null; // Don't render anything if there's no project data
+  }
+
   const projectLink = `/projects/${projectData.id}`;
   console.log("ProjectCard data:", projectData);
 
@@ -12,7 +18,7 @@ function ProjectCard(props) {
 
   return (
     <div className="project-card">
-      <Link to={projectLink}>
+      <Link to={projectLink} onClick={() => console.log("Navigating to:", projectLink)}>
         <img 
           src={projectData.image || "placeholder.jpg"} 
           alt={`${projectData.title} thumbnail`}

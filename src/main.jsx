@@ -13,6 +13,7 @@ import NavBar from "./components/NavBar";
 import { AuthProvider } from "./components/AuthProvider";
 import ErrorBoundary from "./components/ErrorBoundary";
 import CreateProjectForm from "./components/CreateProjectForm";
+import ProjectCard from "./components/ProjectCard";
 
 // Here we create our router and tell it whats pages to render at what path
 const router = createBrowserRouter([
@@ -26,9 +27,8 @@ const router = createBrowserRouter([
           { path: "/login", element: <LoginPage /> },
           { path: "/signup", element: <SignupPage /> },
           { path: "/projects", element: <ProjectsPage /> },
-          { path: "/projects/:id", element: <ProjectCard /> },
-          { path: "/project", element: <ProjectPage /> },
-          { path: "/create-project", element: <CreateProjectForm /> },
+          { path: "/projects/:id", element: <ProjectPage /> },
+          { path: "/projects/create", element: <CreateProjectForm /> },
           { path: "*", element: <h1>404 Not Found</h1> },
      ],
   },

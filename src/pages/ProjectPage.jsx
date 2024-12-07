@@ -6,6 +6,7 @@ import useProject from "../hooks/use-project";
 import useProjects from "../hooks/use-projects";
 import ProjectCard from "../components/ProjectCard";
 import { calculatePledges } from "../utils/projectUtils";
+import MakePledgeForm from "../components/MakePledgeForm";
 import "./ProjectPage.css";
 
 function ProjectPage() {
@@ -15,7 +16,13 @@ function ProjectPage() {
       const { id } = useParams();
       // useProject returns three pieces of info, so we need to grab them all here
       const { project, isLoading, error } = useProject(id);    
+      console.log("ProjectPage ID:", id);
 
+      if (!id) {
+        console.error("ProjectPage: Missing project ID.");
+        return <p>Invalid project ID.</p>;
+      }
+      
       if (isLoading) {
             return (<p>Loading project details...</p>)
       }
@@ -35,30 +42,18 @@ function ProjectPage() {
           navigate("/login"); // Redirect to login if unauthenticated
           return;
         }
-        navigate("/create-project"); // Redirect to create project page
+        navigate("/projects/create"); // Redirect to create project page
       };
 
       // Calculate pledges
       const { totalPledges, remaining } = calculatePledges(project);
 
       return (
-        <div className="project-page">
+        <div className="project-details">
           <header className="project-header">
-            <h1>Projects</h1>
-            <p>Browse and pledge to amazing community projects.</p>
-            {auth?.role === "organisation" && (
-              <button onClick={handleCreateProject} className="create-project-btn">
-              Create Project
-              </button>
-            )}
+            <h1>{project.title}</h1>           
           </header>
-          <section className="project-list">
-            {/* placeholder */}
-            <p>All projects will be listed here.</p>
-          </section>
-
-          <section className="project-details">
-            <h2 className="project-title">{project.title}</h2>
+            <p>{project.description}</p> 
             <p>Goal: ${project.target_amount}</p>
             <p>Total Pledged: ${totalPledges}</p>
             <p>Remaining: ${remaining}</p>
@@ -73,7 +68,7 @@ function ProjectPage() {
               alt={`${project.title} main image`}
               className="project-main-image"
             />
-          </section>
+          
     
           <section className="project-pledges">
             <h2>Pledges</h2>
@@ -88,6 +83,7 @@ function ProjectPage() {
             ) : (
               <p>No pledges yet. Be the first to contribute!</p>
             )}
+            <MakePledgeForm projectId={id} remainingAmount={remaining} />
           </section>
         </div>
       );

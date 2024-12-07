@@ -18,7 +18,8 @@ export default function useProjects() {
         const response = await getProjects(url); // Pass URL for pagination
 
         if (response?.results && Array.isArray(response.results)) {
-          setProjects(response.results); // Update project data
+          setProjects(Array.isArray(response?.results) ? response.results : []);
+          console.log("Fetched projects response:", response);
           setNextPage(response.next); // Set next page URL
           setPreviousPage(response.previous); // Set previous page URL
         } else {
