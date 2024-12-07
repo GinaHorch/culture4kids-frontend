@@ -6,79 +6,112 @@ body {
   }
   
 .login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: url('../assets/BackgroundArt.webp');
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  position: relative; /* Needed for overlay */
   }
-  
-.login-modal {
-    background: white;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
+
+.login-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Black with 70% opacity */
+    z-index: 0; /* Ensure it stays behind the content */
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  z-index: 1;
+}
+
+.login-container h1,
+.login-container h2,
+.login-container p {
+  color: #333333;
+  z-index: 1; /* Ensure content is above the overlay */
+  text-shadow: none
+}
+
+.login-container button {
+  background: #6200ea;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 10px;
+}
+
+.login-container button:hover {
+  background: #4500b3;
+}
+
+.login-container button:focus {
+  outline: 3px solid #ffffff; /* Added focus outline for accessibility */
+  box-shadow: 0 0 10px rgba(98, 0, 234, 0.8); /* Glow effect for focus */
+}
+
+.login-container button:active {
+  transform: scale(0.97);
+}
+
+.toggle-form-button {
+  background: none;
+  border: none;
+  color:#6200ea;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 10px;
+  font-size: 1rem;
+  text-decoration: underline;
+  width: 100%;
+  max-width: 300px;
+}
+
+.toggle-form-button:hover {
+  color: #ffffff;
+  background-color: #6200ea; /* Add a solid background color for better readability */
+  padding: 8px 12px; /* Add padding for a button-like feel */
+  border-radius: 5px; /* Rounded edges for consistency */
+}
+
+.toggle-form-button:focus {
+  outline: 2px solid #ffffff; /* Added focus outline for accessibility */
+  box-shadow: 0 0 5px rgba(98, 0, 234, 0.5); /* Glow effect for focus */
+}
+
+.toggle-form-button:active {
+  transform: scale(0.97); /* Slight press effect */
+}
+
+@media (max-width: 600px) {
+  .login-container {
+    width: 90%;
   }
-  
-h2 {
-    color: #333;
-  }
-  
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-label {
-    text-align: left;
-    color: #555;
-  }
-  
-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-.form-btn {
-    background-color: #5a67d8;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-.form-btn:hover {
-    background-color: #434190;
-  }
-  
-.toggle-form-btn {
-    background: none;
-    border: none;
-    color: #5a67d8;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-.toggle-form-btn:hover {
-    color: #434190;
-  }
-  
-.logout-section {
-    text-align: center;
-  }
-  
-.logout-btn {
-    background-color: #e53e3e;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-.logout-btn:hover {
-    background-color: #c53030;
-  }
+}
