@@ -51,10 +51,15 @@ function LoginForm() {
       
     try {
       const response = await postLogin(result.data.username, result.data.password); // Call login API
-      setAuth({ token: response.token }); // Update auth context
-      window.localStorage.setItem("token", response.token); // Store token in localStorage
+      setAuth({ token: response.token, user: response.user }); // Update auth context
+      // Store token and user details in localStorage
+      window.localStorage.setItem("token", response.token);
+      window.localStorage.setItem("user", JSON.stringify(response.user));
+
+      console.log("User details after login:", response.user);
       navigate("/"); // Redirect to homepage
     } catch (error) {
+      console.error("Login failed:", error.message); // Log error
       setErrors("Invalid username or password."); // Display error to the user
     } finally {
       setIsLoading(false); // Disable loading state

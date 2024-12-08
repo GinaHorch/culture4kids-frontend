@@ -11,7 +11,7 @@ export const useAuth = () => {
 
   const login = async ({ username, password }) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/login/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api-token-auth/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -34,7 +34,10 @@ export const useAuth = () => {
       }
 
       setAuth({ token: data.token, user: data.user });
+      console.log("Auth context updated:", { token: data.token, user: data.user });
       window.localStorage.setItem("token", data.token);
+      window.localStorage.setItem("user", JSON.stringify(data.user)); // Store user details in localStorage
+      console.log("User stored in localStorage:", data.user);
     } catch (error) {
       throw error;
     }
@@ -44,6 +47,7 @@ export const useAuth = () => {
 const logout = () => {
   setAuth({ token: null, user: null });
   window.localStorage.removeItem("token");
+  window.localStorage.removeItem("user"); // Remove user details
 }; 
 
 return { auth, login, logout };
