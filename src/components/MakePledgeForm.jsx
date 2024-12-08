@@ -3,9 +3,9 @@ import z from "zod";
 import { useAuth } from "../hooks/use-auth";
 import "./MakePledgeForm.css";
 
- // Define the schema for pledge validation
- const pledgeSchema = z.object({
-    amount: z.coerce().number().min(1, { message: "Amount must be at least 1" }),
+// Define the schema for pledge validation
+const pledgeSchema = z.object({
+    amount: z.coerce.number().min(1, { message: "Amount must be at least 1" }),
 });
 
 function MakePledgeForm({ projectId, remainingAmount }) {
