@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import z from "zod";
-import postSignup from "../api/post-signup.js";
+import { useAuth } from "../hooks/use-auth";
 
 // Schema validation for signup
 const signupSchema = z.object({
@@ -10,13 +10,33 @@ const signupSchema = z.object({
     password: z.string().min(8, { message: "Password must be at least 8 characters" }),
     confirmPassword: z.string().min(8, { message: "Please confirm your password" }),
     role: z.enum(["user", "organisation"], { message: "Role is required" }),
+    organisation_name: z.string().min(1, { message: "Organisation name is required" }).optional(),
+    organisation_contact: z.string().min(1, { message: "Organisation contact is required" }).optional(),
+    organisation_phone_number: z.string().min(1, { message: "Phone number is required" }).optional(),
+    organisation_ABN: z.string().min(11, { message: "ABN must be at least 11 characters" }).optional(),
+    is_charity: z.boolean().optional(),
   })
+  .refine(
+    (data) =>
+      data.role === "user" ||
+      (data.role === "organisation" &&
+        data.organisation_name &&
+        data.organisation_contact &&
+        data.organisation_phone_number &&
+        data.organisation_ABN),
+    {
+      message: "All organisation fields are required for organisations",
+      path: ["organisation_name"],
+    }
+  )
+
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must match",
     path: ["confirmPassword"],
   });
 
 function SignupForm() {
+  const { signup } = useAuth();
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     username: "",
@@ -24,6 +44,11 @@ function SignupForm() {
     password: "",
     confirmPassword: "",
     role: "user", // Default role
+    organisation_name: "",
+    organisation_contact: "",
+    organisation_phone_number: "",
+    organisation_ABN: "",
+    is_charity: false, // Default to not a charity
   });
   const [errors, setErrors] = useState({}); // For displaying validation errors
 
@@ -35,8 +60,9 @@ function SignupForm() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
     const result = signupSchema.safeParse(credentials);
 
     if (!result.success) {
@@ -48,16 +74,25 @@ function SignupForm() {
       return;
     }
 
-    // Call the signup API
-    postSignup(result.data)
-      .then(() => {
-        alert("Signup successful! You can now log in.");
-        navigate("/login");
-      })
-      .catch((error) => {
-        setErrors({ api: error.message });
-      });
-  };
+    // Adjust the payload for organisations
+    const payload = { ...result.data };
+    if (payload.role === "organisation") {
+      payload.organisation_name = credentials.organisation_name || "";
+      payload.organisation_contact = credentials.organisation_contact || "";
+      payload.organisation_phone_number = credentials.organisation_phone_number || "";
+      payload.organisation_ABN = credentials.organisation_ABN || "";
+      payload.is_charity = credentials.is_charity || false;
+    }
+
+    try {
+      // Call postSignup
+      await signup(payload);
+      alert("Signup successful! You can now log in.");
+      navigate("/login");
+    } catch (error) {
+      setErrors({ api: error.message });
+    }
+  }; 
 
   return (
     <form onSubmit={handleSubmit}>
@@ -68,6 +103,7 @@ function SignupForm() {
           name="username"
           value={credentials.username}
           onChange={handleChange}
+          autoComplete="username"
         />
         {errors.username && <span className="error">{errors.username}</span>}
       </div>
@@ -78,6 +114,7 @@ function SignupForm() {
           name="email"
           value={credentials.email}
           onChange={handleChange}
+          autoComplete="email"
         />
         {errors.email && <span className="error">{errors.email}</span>}
       </div>
@@ -88,6 +125,7 @@ function SignupForm() {
           name="password"
           value={credentials.password}
           onChange={handleChange}
+          autoComplete="new-password"
         />
         {errors.password && <span className="error">{errors.password}</span>}
       </div>
@@ -98,6 +136,7 @@ function SignupForm() {
           name="confirmPassword"
           value={credentials.confirmPassword}
           onChange={handleChange}
+          autoComplete="new-password"
         />
         {errors.confirmPassword && (
           <span className="error">{errors.confirmPassword}</span>
@@ -124,6 +163,7 @@ function SignupForm() {
               name="organisation_name"
               value={credentials.organisation_name || ""}
               onChange={handleChange}
+              autoComplete="organisation"
             />
           </div>
           <div>
@@ -133,6 +173,7 @@ function SignupForm() {
               name="organisation_contact"
               value={credentials.organisation_contact || ""}
               onChange={handleChange}
+              autoComplete="name"
             />
           </div>
           <div>
@@ -142,6 +183,7 @@ function SignupForm() {
               name="organisation_phone_number"
               value={credentials.organisation_phone_number || ""}
               onChange={handleChange}
+              autoComplete="tel"
             />
           </div>
           <div>
@@ -151,8 +193,25 @@ function SignupForm() {
               name="organisation_ABN"
               value={credentials.organisation_ABN || ""}
               onChange={handleChange}
+              autoComplete="off"
             />
           </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="is_charity"
+                checked={credentials.is_charity || false}
+                onChange={(e) =>
+                  setCredentials((prev) => ({
+                  ...prev,
+                  is_charity: e.target.checked,
+                }))
+              }
+            />
+            Is this organisation a registered charity?
+          </label>
+         </div>
         </>
       )}
       <button type="submit">Sign Up</button>

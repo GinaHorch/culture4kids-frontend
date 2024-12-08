@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth.js";
 import z from "zod";
-
 import postLogin from "../api/post-login.js";
 
 // Schema validation with Zod
@@ -14,69 +13,82 @@ const loginSchema = z.object({
 });
 
 function LoginForm() {
-      const navigate = useNavigate();
-      const {auth, setAuth} = useAuth();
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
+  const [errors, setErrors] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
       // State for credentials
-      const [credentials, setCredentials] = useState({
-              username: "",
-              password: "",
-          });
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
       
       // Handle input changes
-      const handleChange = (event) => {
-        const { id, value } = event.target;
-        setCredentials((prevCredentials) => {
-            return {
-              ...prevCredentials,
-              [id]: value,
-            };
-        });
-      };
+  const handleChange = (event) => {
+    const { id, value } = event.target;
+    setCredentials((prev) => ({
+      ...prev,
+      [id]: value,      
+    }));
+  };
       
       // Handle form submission
-      const handleSubmit = (event) => {
-        event.preventDefault();
-        const result = loginSchema.safeParse(credentials);
-
-        if (!result.success) {
-          const error = result.error.errors?.[0];
-          if (error) {
-            alert(error.message);
-          }
-          return;
-        }
-    
-        postLogin(result.data.username, result.data.password).then((response) => {
-          setAuth({ token: response.token }); // Update auth context
-          window.localStorage.setItem("token", response.token);
-          navigate("/");
-        });          
-    };
-
-    return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input 
-                type="text"
-                id="username"
-                placeholder="Enter username"
-                onChange={handleChange}
-            />
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+      
+    const result = loginSchema.safeParse(credentials); // Validate credentials
+    if (!result.success) {
+      const error = result.error.errors?.[0];
+      if (error) {
+        setErrors(error.message); // Set validation error
+      }
+      return;
+    }
+      
+    setIsLoading(true); // Enable loading state
+    setErrors(""); // Clear previous errors
+      
+    try {
+      const response = await postLogin(result.data.username, result.data.password); // Call login API
+      setAuth({ token: response.token }); // Update auth context
+      window.localStorage.setItem("token", response.token); // Store token in localStorage
+      navigate("/"); // Redirect to homepage
+    } catch (error) {
+      setErrors("Invalid username or password."); // Display error to the user
+    } finally {
+      setIsLoading(false); // Disable loading state
+    }
+  };      
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="username">Username:</label>
+        <input 
+            type="text"
+            id="username"
+            placeholder="Enter username"
+            value={credentials.username}
+            onChange={handleChange}
+            autoComplete="username"
+        />
         </div>
         <div>
           <label htmlFor="password">Password:</label>
           <input 
                 type="password"
                 id="password"
-                placeholder="Password"
+                placeholder="Enter password"
+                value={credentials.password}
                 onChange={handleChange}
+                autoComplete="current-password"
               />
         </div>
-        <button type="submit" onClick={handleSubmit}>
-              Login
-           </button>
+        {errors && <p className="error">{errors}</p>} {/* Display error messages */}
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Logging in..." : "Login"}
+        </button>
       </form>
     );
   }
