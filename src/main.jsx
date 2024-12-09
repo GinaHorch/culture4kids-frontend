@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 // Here we import out pages
 import HomePage from "./pages/HomePage";
@@ -20,8 +20,12 @@ const router = createBrowserRouter([
   // These are the three routes!
   {
     path: "/",
-    // Putting our NavBar as the main component will causes the children to render in the <Outlet />
-     element: <NavBar />,
+     element: (
+      <>
+        <NavBar />
+        <Outlet />
+      </>
+     ),
      children: [
           { path: "/", element: <HomePage /> },
           { path: "/login", element: <LoginPage /> },
@@ -38,7 +42,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
       <AuthProvider>
         <ErrorBoundary>
-    {/* Here we wrap our app in the router provider so the pages render */}
           <RouterProvider router={router} />
         </ErrorBoundary>
       </AuthProvider>

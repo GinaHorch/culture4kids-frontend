@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth.js";
 import z from "zod";
-import postLogin from "../api/post-login.js";
 
 // Schema validation with Zod
 const loginSchema = z.object({
@@ -14,7 +13,7 @@ const loginSchema = z.object({
 
 function LoginForm() {
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { login } = useAuth();
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,6 +36,7 @@ function LoginForm() {
       // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
+    setErrors("");
 
     console.log("Submitting login form with credentials:", credentials);
       
@@ -51,24 +51,13 @@ function LoginForm() {
     }
       
     setIsLoading(true); // Enable loading state
-    setErrors(""); // Clear previous errors
-      
+          
     try {
-      const response = await postLogin(result.data.username, result.data.password); // Call login API
-
-      console.log("Login successful, API response:", response);
-
-      setAuth({ token: response.token, user: response.user, role: response.user.role }); // Update auth context
-      // Store token and user details in localStorage
-      window.localStorage.setItem("token", response.token);
-      window.localStorage.setItem("user", JSON.stringify(response.user));
-
-      console.log("User details after login:", response.user);
-      
+      await login(credentials);
       navigate("/"); // Redirect to homepage
     } catch (error) {
-      console.error("Login failed:", error.message); // Log error
-      setErrors("Invalid username or password."); // Display error to the user
+      console.error("Login failed:", error.message);
+      setErrors(error.message || "Invalid username or password.");
     } finally {
       setIsLoading(false); // Disable loading state
     }

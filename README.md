@@ -3,6 +3,9 @@
 Here is the link to Culture4Kids:
 https://sparkling-torte-d2718c.netlify.app/
 
+### You will only be able to create projects (and see the create projects button) when you login as an organisation.
+### Anyone who is signed in can make pledges.
+
 Logical Flow of my project:
 
 1. Homepage:
@@ -34,5 +37,5 @@ Navigation back to the Projects Page or Homepage.
 
 4. Authentication-Restricted Features:
 
-Logged-in organizations can create new projects.
+Logged-in organisations can create new projects.
 Logged-in users can make pledges to projects.
