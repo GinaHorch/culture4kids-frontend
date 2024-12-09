@@ -1,0 +1,36 @@
+Implementation Plan
+Step 1: Homepage
+1.	What to Include:
+o	Add a section to display popular or recent projects. This can use the existing project tiles with a "Featured Projects" heading.
+o	Use the fetchProjects logic to display the recent projects dynamically.
+o	Add "Previous" and "Next" buttons for browsing projects.
+2.	Next Steps for Homepage:
+o	Add a route for / in main.jsx pointing to a HomePage component.
+o	Fetch the first few projects dynamically on load (use your useProjects hook).
+o	Include project tiles linking to individual project details.
+ 
+Step 2: Projects Page
+1.	What to Include:
+o	Categories list (e.g., Aboriginal Art, Aboriginal Dancing, etc.) for filtering.
+o	Full list of open projects.
+o	A "Create New Project" button, visible only to logged-in organizations.
+2.	How to Implement:
+o	Categories List:
+	Fetch categories dynamically from the backend (if available) or hardcode them initially.
+	Allow users to click on a category to filter the displayed projects.
+o	Project List:
+	Use your fetchProjects logic to display all open projects.
+o	"Create New Project" Button:
+	Only show the button if the logged-in user is an organization (use the useAuth hook to check).
+	Clicking the button navigates to a CreateProjectForm.
+ 
+Step 3: Individual Project Page
+1.	What to Include:
+o	Full details about the project.
+o	List of pledges (if available).
+o	A "Make a Pledge" form for logged-in users.
+2.	How to Implement:
+o	Fetch project details dynamically using the useProject hook.
+o	Display the project details and pledges.
+o	Show a form for logged-in users to make a pledge.
+

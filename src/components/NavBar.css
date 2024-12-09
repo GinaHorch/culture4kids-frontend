@@ -25,6 +25,7 @@ a {
   color: #343a40; /* Neutral text color */
   font-weight: 500;
   transition: color 0.3s ease;
+  margin-right: 10px;
 }
 
 a:hover {
