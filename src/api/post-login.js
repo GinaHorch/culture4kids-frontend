@@ -30,6 +30,8 @@ async function postLogin(username, password) {
   
     const data = await response.json();
     console.log("Login response data:", data);
+    console.log("Token from response:", data.token);
+    console.log("User from response:", data.user);    
     return data;
   }
   

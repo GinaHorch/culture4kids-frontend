@@ -31,16 +31,20 @@ function LoginForm() {
       ...prev,
       [id]: value,      
     }));
+    console.log("Updated credentials:", { ...credentials, [id]: value }); 
   };
       
       // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
+
+    console.log("Submitting login form with credentials:", credentials);
       
     const result = loginSchema.safeParse(credentials); // Validate credentials
     if (!result.success) {
       const error = result.error.errors?.[0];
       if (error) {
+        console.error("Validation error:", error.message);
         setErrors(error.message); // Set validation error
       }
       return;
@@ -51,12 +55,16 @@ function LoginForm() {
       
     try {
       const response = await postLogin(result.data.username, result.data.password); // Call login API
-      setAuth({ token: response.token, user: response.user }); // Update auth context
+
+      console.log("Login successful, API response:", response);
+
+      setAuth({ token: response.token, user: response.user, role: response.user.role }); // Update auth context
       // Store token and user details in localStorage
       window.localStorage.setItem("token", response.token);
       window.localStorage.setItem("user", JSON.stringify(response.user));
 
       console.log("User details after login:", response.user);
+      
       navigate("/"); // Redirect to homepage
     } catch (error) {
       console.error("Login failed:", error.message); // Log error
