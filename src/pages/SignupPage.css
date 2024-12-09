@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
     margin: 0;
     padding: 0;
   }
@@ -11,6 +11,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    background-color: #f5f5f5;
     background-image: url('../assets/BackgroundArt.webp');
     background-size: cover;
     background-position: center;
@@ -25,93 +26,162 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Black with 60% opacity */
+    background-color: rgba(0, 0, 0, 0.7); /* Black with 60% opacity */
     z-index: 0; /* Ensure it stays behind the content */
   }
 
-.signup-page h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
-  }
-
-.signup-page h1, .signup-page p {
-    color: #ffffff; /* White text for contrast */
-    z-index: 1; /* Ensure content is above the overlay */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Adds subtle shadow for readability */
-  }
-
+/* Signup form container */
 .signup-page form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
-    z-index: 1; /* Ensure it's above the overlay */
-  }
-
-.signup-page label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #333; /* Subtle color for text */
-  }
+    max-width: 450px;
+    text-align: left;
+    z-index: 1;
+    margin: 0 auto;
+}
 
 .signup-page div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Ensures labels are aligned with inputs */
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5px;
+}
+/* Adjust the label alignment */
+.signup-page form div label {
+  display: inline-block;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #343a40;
+}
 
+.signup-page h1,
+.signup-page h2,
 .signup-page p {
-    text-align: center;
-    font-size: 1rem;
-    margin-top: 20px;
-  }
+    z-index: 1; /* Ensure content is above the overlay */
+    color: #ffffff; /* Ensure contrast against the background */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); 
+}
 
-.signup-page input, .signup-page select, .signup-page button {
-    border-color: #6200ea; /* Highlight on focus */
+/* Input fields */
+.signup-page div input,
+.signup-page div select {
+    width: 100%;
+    max-width: 400px;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin: 10px 0;
     font-size: 1rem;
-    width: 100%; /* Ensures all inputs are the same width */
-    box-sizing: border-box; /* Prevents padding from affecting element width */
-  }
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-.signup-page input:focus, .signup-page select:focus, .signup-page button:focus {
-    outline: none;
-    border-color: #6200ea; /* Highlight color on focus */
-    box-shadow: 0 0 5px rgba(98, 0, 234, 0.5); /* Add subtle glow */
-  }  
+.signup-page div input:focus,
+.signup-page div select:focus {
+    outline: 2px solid #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+/* Add a subtle background color to distinguish form sections */
+.signup-page div:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+  border-radius: 5px; /* Match the input styling for consistency */
+}
 
+/* Checkbox styling */
+.signup-page div input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 10px;
+  width: 20px; /* Bigger size for checkbox */
+  height: 20px;
+  accent-color: #007bff; /* Customize checkbox color */
+}
+
+.signup-page .checkbox-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Button styles */
 .signup-page button {
-    background: #6200ea;
+    background: #007bff;
     color: white;
     cursor: pointer;
     font-weight: bold;
-    transition: background-color 0.3s ease;
-    margin-top: 10px; /* Adds some space above the button */
-  }
-  
-.signup-page button:hover {
-    background: #4500b3;
-  }
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: calc(100% - 20px);
+    max-width: 400px;
+    margin-top: 10px;
+}
 
-.signup-page button:active {
-    transform: scale(0.98); /* Slight press effect */
-  }
+.signup-page div button:hover {
+    background: #0056b3;
+}
 
+.signup-page div button:active {
+    transform: scale(0.98); /* Press effect */
+}
+
+/* Center aligned text */
+.signup-page p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #ffffff; /* Ensure contrast against the background */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); 
+}
+
+/* Accessibility and toggle button styles */
+.signup-page .toggle-form-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+.signup-page .toggle-form-button:hover {
+    color: #ffffff;
+    background-color: #0056b3;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+.signup-page .toggle-form-button:focus {
+    outline: 2px solid #ffffff;
+    box-shadow: 0 0 5px rgba(98, 0, 234, 0.5);
+}
+
+.signup-page .toggle-form-button:active {
+    transform: scale(0.97);
+}
+
+/* Responsive styles */
 @media (max-width: 600px) {
-    .signup-page form, .project-card {
-      width: 90%;
+    .signup-container {
+        width: 90%;
     }
-  
-    .navigation-buttons {
-      flex-direction: column;
-      gap: 10px;
+
+    .signup-page input,
+    .signup-page button,
+    .signup-page .toggle-form-button {
+        max-width: 100%;
     }
-  }
+}
