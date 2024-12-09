@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ auth, login, logout }}>
-      {console.log("AuthProvider initialized with value:", { auth, setAuth, login, logout })}
+      {console.log("AuthProvider initialized with value:", { auth, login, logout })}
       {children || null}
     </AuthContext.Provider>
   );

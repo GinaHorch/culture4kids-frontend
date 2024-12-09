@@ -5,6 +5,7 @@ import "./NavBar.css";
 
 function NavBar() {
     const {auth, logout} = useAuth(); // to manage authentication state
+    console.log("Rendering NavBar");
 
     const handleLogout = () => {
         const confirmLogout = window.confirm("Are you sure you want to log out?");

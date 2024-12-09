@@ -6,12 +6,13 @@ import "./LoginPage.css"; // Custom styling for login/signup forms
 
 function LoginPage() {
   console.log("LoginPage rendered");
-  const { auth, setAuth } = useAuth(); // Check if the user is logged in
+  
+  const { auth, logout } = useAuth(); // Check if the user is logged in
   const [isLoginForm, setIsLoginForm] = useState(true); // Toggle between login/signup forms
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setAuth(null);
+    logout();
     window.localStorage.removeItem("token");
   };
 

@@ -1,16 +1,36 @@
-nav ul {
+nav {
+  background-color: #f8f9fa; /* Light neutral background */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+  padding: 10px 20px;
+  position: fixed; /* Ensure NavBar stays on top */
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+ul {
   list-style: none;
-  padding: 1rem;
-  margin: 0;
   display: flex;
-  gap: 1rem;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
 }
 
-nav a {
+li {
+  margin: 0 15px;
+}
+
+a {
   text-decoration: none;
-  color: #333;
+  color: #343a40; /* Neutral text color */
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-nav a:hover {
-  color: #007BFF;
+a:hover {
+  color: #007bff; /* Blue on hover */
+}
+
+body {
+  margin-top: 60px; /* Add space for fixed NavBar */
 }
