@@ -19,66 +19,15 @@ import ProjectCard from "./components/ProjectCard";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <>
-        <NavBar /> {/* Always render NavBar */}
-        <HomePage /> {/* Default page */}
-      </>
-    ),
-  },
-  {
-    path: "/login",
-    element: (
-      <>
-        <NavBar />
-        <LoginPage />
-      </>
-    ),
-  },
-  {
-    path: "/signup",
-    element: (
-      <>
-        <NavBar />
-        <SignupPage />
-      </>
-    ),
-  },
-  {
-    path: "/projects",
-    element: (
-      <>
-        <NavBar />
-        <ProjectsPage />
-      </>
-    ),
-  },
-  {
-    path: "/projects/:id",
-    element: (
-      <>
-        <NavBar />
-        <ProjectPage />
-      </>
-    ),
-  },
-  {
-    path: "/projects/create",
-    element: (
-      <>
-        <NavBar />
-        <CreateProjectForm />
-      </>
-    ),
-  },
-  {
-    path: "*",
-    element: (
-      <>
-        <NavBar />
-        <h1>404 Not Found</h1>
-      </>
-    ),
+    element: <NavBar />,
+    children: [
+      {path: "/", element: <HomePage />},
+      {path: "/login", element: <LoginPage />},
+      {path: "/signup", element: <SignupPage />},
+      {path: "/projects", element: <ProjectsPage />},
+      {path: "/projects/:id", element: <ProjectPage />},
+      {path: "/projects/create", element: <CreateProjectForm />}
+    ],
   },
 ]);
 

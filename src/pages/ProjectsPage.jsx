@@ -28,7 +28,7 @@ function ProjectsPage() {
         ))}
       </div>
       
-      {auth?.user?.is_organization && (
+      {auth?.role === "organisation" && (
         <Link to="/projects/create">
           <button>Create New Project</button>
         </Link>
