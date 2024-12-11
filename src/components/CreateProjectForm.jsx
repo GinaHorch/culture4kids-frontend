@@ -32,15 +32,17 @@ function CreateProjectForm() {
 
     const validateForm = () => {
       const validationErrors = {};
-      if (!formData.title) validationErrors.title = "Title is required.";
-      if (!formData.description) validationErrors.description = "Description is required.";
-      if (!formData.target_amount || isNaN(formData.target_amount)) {
-        validationErrors.target_amount = "Target amount must be a valid number.";
-      }
-      if (!formData.location) validationErrors.location = "Location is required.";
-      if (!formData.end_date) validationErrors.end_date = "End date is required.";
-      if (!formData.category) validationErrors.category = "Category is required.";
-  
+      const requiredFields = ["title", "description", "target_amount", "location", "end_date", "category"];
+
+      requiredFields.forEach((field) => {
+        if (!formData[field]) {
+        validationErrors[field] = `${field.replace("_", " ")} is required.`;
+     }
+   });
+
+  if (formData.target_amount && isNaN(formData.target_amount)) {
+    validationErrors.target_amount = "Target amount must be a valid number.";
+  }
       setErrors(validationErrors);
       return Object.keys(validationErrors).length === 0;
     };

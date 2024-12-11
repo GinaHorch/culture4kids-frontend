@@ -30,6 +30,7 @@ export default function useCreateProject() {
       return await response.json(); // Return the created project
     } catch (error) {
       setCreateError(error.message);
+      console.error("Error creating project:", error);
       throw error;
     } finally {
       setIsCreating(false);
