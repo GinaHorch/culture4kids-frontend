@@ -1,15 +1,25 @@
-import { createContext, useCallback, useState } from "react";
+import { createContext, useCallback, useMemo, useState } from "react";
 
 // Here we create the Context
 export const AuthContext = createContext();
 
 // Here we create the component that will wrap our app, this means all it children can access the context using are hook.
 export const AuthProvider = ({ children }) => {
-  
-  const [auth, setAuth] = useState({
-    token: window.localStorage.getItem("token") || null,
-    user: JSON.parse(window.localStorage.getItem("user")) || null,
-    role: JSON.parse(window.localStorage.getItem("user"))?.role || null,
+   // Updated auth state initialisation with validation for localStorage data
+   const [auth, setAuth] = useState(() => {
+    const token = window.localStorage.getItem("token");
+    const user = window.localStorage.getItem("user");
+    try {
+      const parsedUser = user ? JSON.parse(user) : null;
+      return {
+        token: token || null,
+        user: parsedUser,
+        role: parsedUser?.role || null,
+      };
+    } catch {
+      console.error("Error parsing user data from localStorage");
+      return { token: null, user: null, role: null };
+    }
   });
 
   console.log("AuthContext.Provider initialized with:", { auth });
@@ -55,9 +65,12 @@ export const AuthProvider = ({ children }) => {
     console.log("User logged out.");
   }, []);
 
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({ auth, login, logout }), [auth, login, logout]);
+  
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
-      {console.log("AuthProvider initialized with value:", { auth, login, logout })}
+    <AuthContext.Provider value={contextValue}>
+      {console.log("AuthProvider initialized with value:", contextValue)}
       {children || null}
     </AuthContext.Provider>
   );
