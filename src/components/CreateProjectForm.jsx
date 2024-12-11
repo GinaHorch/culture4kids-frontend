@@ -36,13 +36,18 @@ function CreateProjectForm() {
 
       requiredFields.forEach((field) => {
         if (!formData[field]) {
-        validationErrors[field] = `${field.replace("_", " ")} is required.`;
+          validationErrors[field] = `${field.replace("_", " ")} is required.`;
      }
    });
 
-  if (formData.target_amount && isNaN(formData.target_amount)) {
-    validationErrors.target_amount = "Target amount must be a valid number.";
-  }
+      if (formData.target_amount && isNaN(formData.target_amount)) {
+        validationErrors.target_amount = "Target amount must be a valid number.";
+      }
+
+      if (!formData.category || isNaN(Number(formData.category))) {
+        validationErrors.category = "Category must be a valid number.";
+      }
+
       setErrors(validationErrors);
       return Object.keys(validationErrors).length === 0;
     };
@@ -66,6 +71,9 @@ function CreateProjectForm() {
       setErrors({});
       
       if (!validateForm()) return;
+
+      console.log("Submitting project with auth token:", auth.token);
+      console.log("Form data being submitted:", formData);
   
       try {
         await createProject(formData, auth.token); // Call the hook to create a project
@@ -79,6 +87,8 @@ function CreateProjectForm() {
   
   return (
     <form className="create-project-form" onSubmit={handleSubmit}>
+      {apiError && <p className="error" style={{ color: "red" }}>{apiError}</p>}
+
       <label>
         Title:
         <input
@@ -177,7 +187,6 @@ function CreateProjectForm() {
       </label>
   
       <button type="submit">Create Project</button>
-      {apiError && <p className="error">{apiError}</p>}
     </form>
   );
 }

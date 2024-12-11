@@ -20,6 +20,7 @@ export default function useCreateProject() {
           Authorization: `Bearer ${authToken}`,
         },
         body: formData,
+        credentials: "include",
       });
 
       if (!response.ok) {
