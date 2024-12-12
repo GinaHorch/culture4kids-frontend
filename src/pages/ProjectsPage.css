@@ -1,0 +1,25 @@
+.project-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .project-card {
+    margin: 20px;
+  }
+  
+  .create-project-button {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    background-color: #6200ea;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .create-project-button:hover {
+    background-color: #4500b3;
+  }

@@ -3,6 +3,7 @@ import useProjects from "../hooks/use-projects";
 import ProjectCard from "../components/ProjectCard";
 import { useAuth } from "../hooks/use-auth";
 import { Link, useNavigate } from "react-router-dom";
+import "./ProjectsPage.css";
 
 function ProjectsPage() {
   const { projects, isLoading, error } = useProjects();
@@ -45,7 +46,7 @@ function ProjectsPage() {
       
       {auth?.role === "organisation" && (
         <Link to="/projects/create">
-          <button onClick={handleCreateFeedback}>Create New Project</button>
+          <button className="create-project-button" onClick={handleCreateFeedback}>Create New Project</button>
         </Link>
       )}
     </div>
