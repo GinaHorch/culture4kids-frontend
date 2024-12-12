@@ -14,14 +14,15 @@ export default function useCreateProject() {
     });
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/projects/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/projects/create/`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Token ${authToken}`,
         },
         body: formData,
         credentials: "include",
       });
+      console.log('Body:', formData);
 
       if (!response.ok) {
         const errorData = await response.json();
