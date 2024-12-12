@@ -27,10 +27,10 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ username, password }) => {
     try {
       console.log("Attempting login with:", { username, password });
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api-token-auth/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/token-auth/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username: username, password: password }),
       });
 
       console.log("Login response status:", response.status);
@@ -67,10 +67,10 @@ export const AuthProvider = ({ children }) => {
 
   // Memoize context value to prevent unnecessary re-renders
   const contextValue = useMemo(() => ({ auth, login, logout }), [auth, login, logout]);
-  
+
   return (
     <AuthContext.Provider value={contextValue}>
-      {console.log("AuthProvider initialized with value:", contextValue)}
+      {console.log("AuthProvider initialised with value:", contextValue)}
       {children || null}
     </AuthContext.Provider>
   );

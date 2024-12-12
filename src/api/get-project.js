@@ -1,7 +1,13 @@
+import { API_BASE_URL } from "./api";
+
 async function getProject(projectId) {
-    const url = `${import.meta.env.VITE_API_URL}/projects/${projectId}`;
-    console.log("Fetching from URL:", url);
-    const response = await fetch(url, { method: "GET" });
+   try {    
+    const response = await fetch(`${API_BASE_URL}projects/${projectId}`, { 
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   
     if (!response.ok) {
       const fallbackError = `Error fetching project with id ${projectId}`;
@@ -15,6 +21,10 @@ async function getProject(projectId) {
     }
   
     return await response.json();
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    throw error;
   }
+}
   
   export default getProject;

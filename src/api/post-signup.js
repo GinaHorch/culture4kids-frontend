@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://culture4kids-7a814d1e1904.herokuapp.com/";
+import { API_BASE_URL } from "./api";
 
 async function postSignup(signupData) {
   try {

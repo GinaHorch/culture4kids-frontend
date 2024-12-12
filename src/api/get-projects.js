@@ -1,12 +1,14 @@
-const API_BASE_URL = `${import.meta.env.VITE_API_URL}/projects/`;
+import { API_BASE_URL } from './api';
 
-async function getProjects(url) {
-    console.log("Fetching projects from:", url);
+async function getProjects() {
     try {
-        const response = await fetch(url, { method: "GET" });
-
-        // Check if the response is successful
-        if (!response.ok) {
+      const response = await fetch(`${API_BASE_URL}projects/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+          if (!response.ok) {
           const fallbackError = "Error fetching projects";
 
           // Attempt to parse the error response into JSON
