@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ username, password }) => {
     try {
       console.log("Attempting login with:", { username, password });
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/token-auth/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api-token-auth/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, password: password }),
