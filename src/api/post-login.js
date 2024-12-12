@@ -6,7 +6,7 @@ async function postLogin(username, password) {
       console.log("Attempting login with:", { username, password });
    
       const response = await fetch(`${API_BASE_URL}api/token-auth/`, {
-          method: "GET", // We need to tell the server that we are sending JSON data in the body
+          method: "POST", // We need to tell the server that we are sending JSON data in the body
           headers: {
             "Content-Type": "application/json"
           },
