@@ -4,7 +4,7 @@ import { API_BASE_URL } from "./api";
 async function updateProject(projectId, updatedData, authToken) {
     console.log("Auth Token:", authToken); // Log the auth token to ensure it's being passed correctly
     try {
-        const response = await fetch(`${API_BASE_URL}projects/${projectId}/`, {
+        const response = await fetch(`${API_BASE_URL}/projects/${projectId}/`, {
             method: "PATCH",
             headers: {
                 Authorization: `Token ${authToken}`, // Remove the whitespace after Token

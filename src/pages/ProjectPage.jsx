@@ -10,14 +10,15 @@ import { calculatePledges } from "../utils/projectUtils";
 import MakePledgeForm from "../components/MakePledgeForm";
 import "./ProjectPage.css";
 import UpdateProject from "../components/UpdateProject";
+import getProject from "../api/get-project";
 
 function ProjectPage() {
       const { auth } = useAuth();
       const navigate = useNavigate();
-      // Here we use a hook that comes for free in react router called `useParams` to get the id from the URL so that we can pass it to our useProject hook.
       const { id } = useParams();
       // useProject returns three pieces of info, so we need to grab them all here
-      const { project, isLoading, error } = useProject(id); 
+      const { project, isLoading, error, refetch } = useProject(id); 
+      const [localError, setError] = useState(null);
       const [isUpdating, setIsUpdating] = useState(false);
       const [updatedProject, setUpdatedProject] = useState(project);
       console.log("ProjectPage ID:", id);
@@ -61,10 +62,9 @@ function ProjectPage() {
       const handleUpdateSuccess = async (updatedProjectData) => {
         console.log("Project updated successfully:", updatedProjectData);
         setUpdatedProject(updatedProjectData); // Update the state with new data
-
-        // Re-fetch the project to ensure the freshest data.
-        const refreshedProject = await getProject(id);
-        setUpdatedProject(refreshedProject);
+        await refetch(); // Refetch the project data
+        // Update the project state
+        // setProject(updatedProjectData);
       };
 
       // Calculate pledges

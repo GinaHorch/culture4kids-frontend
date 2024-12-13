@@ -30,5 +30,18 @@ export default function useProject(projectId) {
     // This time we pass the projectId to the dependency array so that the hook will re-run if the projectId changes.
   }, [projectId]);
 
-  return { project, isLoading, error };
+  const refetch = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const project = await getProject(projectId);
+      setProject(project);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { project, isLoading, error, refetch };
 }

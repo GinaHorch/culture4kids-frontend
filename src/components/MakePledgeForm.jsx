@@ -21,13 +21,20 @@ function MakePledgeForm({ projectId, remainingAmount }) {
     setSuccess(null);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/projects/${projectId}/pledges/`, {
+      // Validate the pledge amount
+      pledgeSchema.parse({ amount: pledgeAmount });
+      
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/projects/pledges/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`, // Pass auth token
+          Authorization: `Token ${auth.token}`, // Pass auth token
         },
-        body: JSON.stringify({ amount, comment }),
+        body: JSON.stringify({ 
+          amount: pledgeAmount, 
+          comment, 
+          project: projectId 
+        }),
       });
 
       if (!response.ok) {
