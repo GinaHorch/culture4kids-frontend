@@ -23,3 +23,8 @@
   .create-project-button:hover {
     background-color: #4500b3;
   }
+
+  button.active {
+    background-color: #007bff;
+    color: white;
+  }

@@ -1,37 +1,90 @@
-nav {
-  background-color: #f8f9fa; /* Light neutral background */
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
-  padding: 10px 20px;
-  position: fixed; /* Ensure NavBar stays on top */
+/* General NavBar Styles */
+.navbar {
+  background-color: #3c2f2f; /* Earthy dark tone */
+  color: white;
+  padding: 0.5rem 1rem;
+  position: sticky;
   top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-ul {
-  list-style: none;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-li {
-  margin: 0 15px;
+.navbar-links li {
+  margin: 0 1rem;
 }
 
-a {
+.navbar-links a {
   text-decoration: none;
-  color: #343a40; /* Neutral text color */
-  font-weight: 500;
+  color: white;
+  font-size: 1rem;
   transition: color 0.3s ease;
-  margin-right: 10px;
 }
 
-a:hover {
-  color: #007bff; /* Blue on hover */
+.navbar-links a:hover {
+  color: #f0c14b; /* Vibrant accent color */
 }
 
-body {
-  margin-top: 60px; /* Add space for fixed NavBar */
+/* Burger Menu */
+.burger-menu {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 20px;
+  width: 25px;
+}
+
+.burger-bar {
+  height: 3px;
+  width: 100%;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .burger-menu {
+    display: flex;
+  }
+
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    background-color: #3c2f2f; /* Same as navbar */
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .navbar-links li {
+    margin: 0.5rem 0;
+  }
 }

@@ -10,7 +10,17 @@ function ProjectsPage() {
   const { auth } = useAuth();
   const [feedbackMessage, setFeedbackMessage] = useState(""); 
   const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState("All Categories");
 
+   // Map numeric category values to category names
+  const categoryMap = {
+      1: "Aboriginal Art",
+      2: "Aboriginal Dancing",
+      3: "Aboriginal Languages",
+      4: "Bush Camps",
+      5: "Trips on Country",
+  };
+  
   const handleCreateFeedback = () => {
     if (!auth?.user?.is_organization) {
       setFeedbackMessage("You must be logged in as an organisation to create a project.");
@@ -19,28 +29,56 @@ function ProjectsPage() {
     navigate("/projects/create");
   };
 
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
+  // Filter projects based on selected category
+  const filteredProjects = selectedCategory === "All Categories"
+    ? projects
+    : projects.filter((project) => {
+        const categoryName = categoryMap[project.category]; // Map numeric category to name
+        return categoryName === selectedCategory;
+    });
+
+
   return (
     <div>
       <h1>Browse Projects</h1>
       <p>Browse and pledge to amazing community projects.</p>
       
       <div className="categories">
-        <button>Aboriginal Art</button>
-        <button>Aboriginal Dancing</button>
-        <button>Aboriginal Languages </button>
-        <button>Bush Camps</button>
-        <button>Trips on Country</button>
+      <button
+                    className={selectedCategory === "All Categories" ? "active" : ""}
+                    onClick={() => handleCategoryClick("All Categories")}
+                >
+                    All Categories
+                </button>
+                {Object.entries(categoryMap).map(([key, value]) => (
+                    <button
+                        key={key}
+                        className={selectedCategory === value ? "active" : ""}
+                        onClick={() => handleCategoryClick(value)}
+                    >
+                        {value}
+                    </button>
+                ))}
       </div>
 
+      <h2>{selectedCategory}</h2>
+
       <div className="project-list">
-        {isLoading && <p>Loading projects...</p>}
-        {error && <p className="error">Error loading projects: {error.message}</p>}
-        {projects
-        .filter((project) => project) // Ensure valid project data
-        .map((project) => (
-          <ProjectCard key={project.id} projectData={project} />
-        ))}
-      </div>
+                {isLoading && <p>Loading projects...</p>}
+                {error && <p className="error">Error loading projects: {error.message}</p>}
+                {filteredProjects.length > 0 ? (
+                    filteredProjects.map((project) => (
+                        <ProjectCard key={project.id} projectData={project} />
+                    ))
+                ) : (
+                    <p>No projects available for this category.</p>
+                )}
+            </div>
 
       {feedbackMessage && <p className="feedback">{feedbackMessage}</p>}
       
