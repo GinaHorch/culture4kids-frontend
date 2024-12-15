@@ -1,31 +1,35 @@
-import { API_BASE_URL } from "./api";
 
-
-async function updateProject(projectId, updatedData, authToken) {
-    console.log("Auth Token:", authToken); // Log the auth token to ensure it's being passed correctly
+async function updateProjectApi(projectId, authToken, formData) {
+       
     try {
-        const response = await fetch(`${API_BASE_URL}/projects/${projectId}/`, {
+        console.log("FormData being sent:", Array.from(formData.entries())); // Log formData
+        console.log("Auth Token in updateProjectApi:", authToken); // Log the token
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/projects/${projectId}/`, {
             method: "PATCH",
             headers: {
-                Authorization: `Token ${authToken}`, // Remove the whitespace after Token
-                "Content-Type": "application/json",
-              },
-            body: JSON.stringify(updatedData),
+                Authorization: `Token ${authToken}`, 
+            },
+            body: formData,
             credentials: "include",
         });
-        console.log("Token:", authToken);
-        console.log("Endpoint:", `${API_BASE_URL}/projects/${projectId}/`);
+        console.log("Response Status:", response.status);
+        console.log("Endpoint:", `${import.meta.env.VITE_API_URL}/projects/${projectId}/`);
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.detail || "Failed to update project.");
-        }
-
-        return await response.json(); // Return the updated project
-    } catch (error) {
-        console.error("Error in update-project API call:", error);
-        throw error;
+            try {
+              const errorData = await response.json();
+              console.error("Error response from backend:", errorData);
+            } catch {
+              throw new Error(errorData.detail || "Failed to update project.");
+            }
+          }
+        
+          return await response.json();
+        } catch (error) {
+            console.error("Error in updateProjectApi:", error);
+            throw error;
+          }
     }
-}
-
-export default updateProject;
+    
+    export default updateProjectApi;

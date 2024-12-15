@@ -13,7 +13,11 @@ import NavBar from "./components/NavBar";
 import { AuthProvider } from "./components/AuthProvider";
 import ErrorBoundary from "./components/ErrorBoundary";
 import CreateProjectForm from "./components/CreateProjectForm";
+import LoginForm from "./components/LoginForm";
+import SignupForm from "./components/SignupForm";
+import MakePledgeForm from "./components/MakePledgeForm";
 import ProjectCard from "./components/ProjectCard";
+import UpdateProject from "./components/UpdateProject";
 
 // Define the router
 const router = createBrowserRouter([

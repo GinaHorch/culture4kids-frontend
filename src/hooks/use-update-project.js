@@ -1,22 +1,23 @@
 import { useState } from "react";
-import updateProject from "../api/update-project";
+import updateProjectApi from "../api/update-project";
 import { useAuth } from "./use-auth";
 
 
-export default function useUpdateProject() {
-    const { authToken } = useAuth();
+function useUpdateProject() {
+    const { auth } = useAuth();
     const [isUpdating, setIsUpdating] = useState(false);
     const [error, setError] = useState(null);
 
-    const updateProjectHandler = async (projectId, updatedData) => {
+    const updateProject = async (projectId, formData) => {
         setIsUpdating(true);
         setError(null);
 
         try {
-            console.log("Auth Token:", authToken)
-            const response = await updateProject(projectId, authToken, updatedData);
-            return response;
-        } catch (error) {
+            console.log("Token in use-update-project:", auth.token);
+            console.log("FormData in use-update-project:", Array.from(formData.entries()));
+            return await updateProjectApi(projectId, auth.token, formData);
+            
+          } catch (error) {
             setError(error);
             console.error("Error updating project:", error);
             throw error;
@@ -25,5 +26,7 @@ export default function useUpdateProject() {
         }
     };
 
-    return { updateProject: updateProjectHandler, isUpdating, error };
+    return { updateProject, isUpdating, error };
 }
+
+export default useUpdateProject;

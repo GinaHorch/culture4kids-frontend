@@ -32,7 +32,7 @@ Navigation to individual project details via project tiles.
 
 Purpose: Provide detailed information about a project and allow users to make pledges.
 Key Elements:
-Full project details (title, description, goal, amount pledged, remaining amount, etc.).
+Full project details (title, description, target amount, amount pledged, remaining amount, etc.).
 List of pledges made (if applicable).
 A form to make a pledge (available to logged-in users only).
 Navigation back to the Projects Page or Homepage.

@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth";
-import { useParams } from "react-router-dom";
 import useProject from "../hooks/use-project";
 import useProjects from "../hooks/use-projects";
 import ProjectCard from "../components/ProjectCard";
@@ -81,7 +80,7 @@ function ProjectPage() {
             <p>Description: {updatedProject ? updatedProject.description : project.description}</p> 
             <p>Location: {updatedProject ? updatedProject.location : project.location}</p>
             <p>Category: {updatedProject ?updatedProject.category : project.category}</p>
-            <p>Goal: ${updatedProject ? updatedProject.target_amount : project.target_amount}</p>
+            <p>Target Amount: ${updatedProject ? updatedProject.target_amount : project.target_amount}</p>
             <p>Total Pledged: ${totalPledges}</p>
             <p>Remaining: ${remaining}</p>
             <p className="project-status">
