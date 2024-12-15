@@ -1,27 +1,34 @@
 import { useState, useEffect } from "react"; // Added useRef for caching
 import getProjects from "../api/get-projects";
 
-export default function useProjects() {
+function useProjects() {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
+  console.log("Projects State in useProjects:", projects);
   
   // Function to fetch projects from the backend with caching logic. 
-  const fetchProjects = async (url) => {
+  const fetchProjects = async () => {
     setIsLoading(true);
     setError(null);
+    let allProjects = [];
+    let nextPage = `${import.meta.env.VITE_API_URL}/projects/`;
 
     try {
-        console.log("Fetching projects from:", url || "default endpoint");
-        const response = await getProjects(url); // Pass URL for pagination
+      while (nextPage) {
+        const response = await fetch(nextPage);
+        const data = await response.json();
 
-        if (response?.results && Array.isArray(response.results)) {
-          setProjects(Array.isArray(response?.results) ? response.results : []);
-          console.log("Fetched projects response:", response);
+        if (Array.isArray(data.results)) {
+          allProjects = [...allProjects, ...data.results];
+          nextPage = data.next; // URL for the next page
         } else {
-          console.error("Unexpected response format:", response);
-          setProjects([]); // Fallback for empty results
+          console.error("Unexpected data format in use-projects Hook", data);
+          break;
+        }
       }
+        setProjects(allProjects);
+        console.log("Check if all projects have been fetched:", allProjects);
     } catch (error) {
       console.error("Error fetching projects:", error);
       setError(error);
@@ -29,16 +36,41 @@ export default function useProjects() {
       setIsLoading(false);
     }
   };
-   // We use the useEffect hook to fetch the projects from the API and update the state variables accordingly.
-   useEffect(() => {
-    const initialUrl = `${import.meta.env.VITE_API_URL}/projects/`;
-    fetchProjects(initialUrl);      
-}, []); // Empty dependency array ensures this runs only on mount
+
+  const updateProjectLocally = (updatedProject) => {
+    console.log("Updating project locally:", updatedProject);
+    setProjects((prevProjects) =>
+      Array.isArray(prevProjects)
+        ? prevProjects.map((project) =>
+            project.id === updatedProject.id 
+            ? { ...project, ...updatedProject }
+            : project
+        )
+      : [] // Fallback to prevent non-array issues
+    );
+};
+const refetchProjects = async () => {
+  try {
+    await fetchProjects(); // Call the existing fetchProjects function
+    console.log("Projects successfully refetched.");
+  } catch (error) {
+    console.error("Error refetching projects:", error);
+  }
+};
+
+useEffect(() => {
+  fetchProjects(); // Initial fetch when component mounts
+}, []);
 
    // Finally, we return the state variables and functions for external use
   return { 
     projects, 
     isLoading, 
     error, 
+    fetchProjects,
+    updateProjectLocally,
+    refetchProjects
   };
 }
+
+export default useProjects;

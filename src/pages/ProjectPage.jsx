@@ -15,7 +15,7 @@ function ProjectPage() {
       const { auth } = useAuth();
       const navigate = useNavigate();
       const { id } = useParams();
-      // useProject returns three pieces of info, so we need to grab them all here
+      console.log("ProjectPage ID from route:", id);
       const { project, isLoading, error, refetch } = useProject(id); 
       const [localError, setError] = useState(null);
       const [isUpdating, setIsUpdating] = useState(false);

@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import useProjects from "../hooks/use-projects";
+import useUpdateProject from "../hooks/use-update-project";
 import ProjectCard from "../components/ProjectCard";
 import { useAuth } from "../hooks/use-auth";
 import { Link, useNavigate } from "react-router-dom";
 import "./ProjectsPage.css";
 
 function ProjectsPage() {
-  const { projects, isLoading, error } = useProjects();
+  const { projects, isLoading, error, updateProjectLocally, refetchProjects } = useProjects();
+  console.log("Projects in ProjectsPage:", projects);
+  const { updateProject } = useUpdateProject(updateProjectLocally);
   const { auth } = useAuth();
   const [feedbackMessage, setFeedbackMessage] = useState(""); 
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
+
+  useEffect(() => {
+    refetchProjects();
+  }, []);
 
    // Map numeric category values to category names
   const categoryMap = {
@@ -29,19 +36,29 @@ function ProjectsPage() {
     navigate("/projects/create");
   };
 
-
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
 
-  // Filter projects based on selected category
-  const filteredProjects = selectedCategory === "All Categories"
-    ? projects
-    : projects.filter((project) => {
-        const categoryName = categoryMap[project.category]; // Map numeric category to name
-        return categoryName === selectedCategory;
-    });
+  const handleProjectUpdate = async (projectId, formData) => {
+    try {
+      await updateProject(projectId, formData);
+      await refetchProjects(); // Refresh the project list after a successful update
+    } catch (err) {
+      console.error("Error updating project:", err);
+    }
+  };
 
+  // Filter projects based on selected category
+  const filteredProjects = Array.isArray(projects)
+    ? selectedCategory === "All Categories"
+      ? projects
+      : projects.filter((project) => {
+          const categoryName = categoryMap[project.category]; // Map numeric category to name
+          return categoryName === selectedCategory;
+      })
+    : [];
+    console.log("Filtered Project Data in ProjectsPage:", filteredProjects);
 
   return (
     <div>
@@ -49,21 +66,21 @@ function ProjectsPage() {
       <p>Browse and pledge to amazing community projects.</p>
       
       <div className="categories">
-      <button
-                    className={selectedCategory === "All Categories" ? "active" : ""}
-                    onClick={() => handleCategoryClick("All Categories")}
-                >
-                    All Categories
-                </button>
-                {Object.entries(categoryMap).map(([key, value]) => (
-                    <button
-                        key={key}
-                        className={selectedCategory === value ? "active" : ""}
-                        onClick={() => handleCategoryClick(value)}
-                    >
-                        {value}
-                    </button>
-                ))}
+        <button
+          className={selectedCategory === "All Categories" ? "active" : ""}
+          onClick={() => handleCategoryClick("All Categories")}
+        >
+          All Categories
+        </button>
+          {Object.entries(categoryMap).map(([key, value]) => (
+            <button
+              key={key}
+              className={selectedCategory === value ? "active" : ""}
+              onClick={() => handleCategoryClick(value)}
+            >
+              {value}
+            </button>
+          ))}
       </div>
 
       <h2>{selectedCategory}</h2>
@@ -73,12 +90,16 @@ function ProjectsPage() {
                 {error && <p className="error">Error loading projects: {error.message}</p>}
                 {filteredProjects.length > 0 ? (
                     filteredProjects.map((project) => (
-                        <ProjectCard key={project.id} projectData={project} />
+                        <ProjectCard 
+                          key={project.id} 
+                          projectData={project} 
+                          onUpdate={(formData) => handleProjectUpdate(project.id, formData)}
+                        />
                     ))
                 ) : (
                     <p>No projects available for this category.</p>
                 )}
-            </div>
+      </div>
 
       {feedbackMessage && <p className="feedback">{feedbackMessage}</p>}
       

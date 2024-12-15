@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useProjects from "../hooks/use-projects";
+import useUpdateProject from "../hooks/use-update-project";
 import ProjectCard from "../components/ProjectCard";
 import styles from "./HomePage.module.css";
 
@@ -21,9 +22,15 @@ function HomePage() {
     projects,
     isLoading,
     error,
+    updateProjectLocally,
+    refetchProjects
   } = useProjects();
 
   console.log("Projects data:", projects);
+
+  useEffect(() => {
+      refetchProjects();
+    }, []);
 
   return (
     <div className={styles.pageContainer}>

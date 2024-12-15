@@ -41,3 +41,37 @@ Navigation back to the Projects Page or Homepage.
 
 Logged-in organisations can create new projects.
 Logged-in users can make pledges to projects.
+
+## Key take aways
+- Although you use Bearer Token in Insomnia, you need to write in your authentication header in the frontend Authorization: `Token ${authToken}` and sometimes the page requires you to write .token, or authToken or just token - go with the flow
+- Order matters! When auth.token and formData were in a different order, well it tried to use formData as token and the token as formData... e.g., updateProjectApi(projectId, auth.token, formData);
+- Your base URL matters, does it have a / or not? This will determine if fetch(`${import.meta.env.VITE_API_URL}/api-token-auth/`) works, or if it only works without / before api-token-auth/
+- Pagination is a thing! When you are wondering why your projects that you are updating disappear (if you have more than 10 projects) but you can call the disappeared project directly via their ID - it's because the backend uses pagination of 10 and you need to tell the frontend to check out the next page when you are refetching data. And yes, this was a scenario where I could use a WHILE loop: 
+    const fetchProjects = async () => {
+    setIsLoading(true);
+    setError(null);
+    let allProjects = [];
+    let nextPage = `${import.meta.env.VITE_API_URL}/projects/`;
+
+    try {
+        while (nextPage) {
+            const response = await fetch(nextPage);
+            const data = await response.json();
+
+            if (Array.isArray(data.results)) {
+                allProjects = [...allProjects, ...data.results];
+                nextPage = data.next; // URL for the next page
+            } else {
+                console.error("Unexpected data format:", data);
+                break;
+            }
+        }
+
+        setProjects(allProjects);
+    } catch (error) {
+        console.error("Error fetching projects:", error);
+        setError(error);
+    } finally {
+        setIsLoading(false);
+    }
+};
