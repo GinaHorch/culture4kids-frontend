@@ -21,16 +21,12 @@ function HomePage() {
     projects,
     isLoading,
     error,
-    fetchNextPage,
-    fetchPreviousPage,
-    nextPage,
-    previousPage,
   } = useProjects();
 
   console.log("Projects data:", projects);
 
   return (
-    <div className="{styles.pageContainer">
+    <div className={styles.pageContainer}>
       {/* Hero Section */}
       <header className={styles.hero}>
         <div className={styles.heroContent}>
@@ -60,16 +56,6 @@ function HomePage() {
                     <ProjectCard projectData={projectData} />
                   </div>
                 ))}
-
-                {/* Pagination Buttons */}
-                <div className={styles.pagination}>
-                  <button onClick={fetchPreviousPage} disabled={!previousPage}>
-                    Previous
-                  </button>
-                  <button onClick={fetchNextPage} disabled={!nextPage}>
-                    Next
-                  </button>
-                </div>
               </>
             ) : (
               <p>No projects available</p>

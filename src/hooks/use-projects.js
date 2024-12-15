@@ -5,8 +5,6 @@ export default function useProjects() {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
-  const [nextPage, setNextPage] = useState(null); // Tracks next page URL
-  const [previousPage, setPreviousPage] = useState(null); // Tracks previous page URL
   
   // Function to fetch projects from the backend with caching logic. 
   const fetchProjects = async (url) => {
@@ -20,8 +18,6 @@ export default function useProjects() {
         if (response?.results && Array.isArray(response.results)) {
           setProjects(Array.isArray(response?.results) ? response.results : []);
           console.log("Fetched projects response:", response);
-          setNextPage(response.next); // Set next page URL
-          setPreviousPage(response.previous); // Set previous page URL
         } else {
           console.error("Unexpected response format:", response);
           setProjects([]); // Fallback for empty results
@@ -39,27 +35,10 @@ export default function useProjects() {
     fetchProjects(initialUrl);      
 }, []); // Empty dependency array ensures this runs only on mount
 
-  // Navigation functions for pagination
-  const fetchNextPage = () => {
-    if (nextPage) {
-      fetchProjects(nextPage);
-    }
-  };
-
-  const fetchPreviousPage = () => {
-    if (previousPage) {
-      fetchProjects(previousPage);
-    }
-  };
- 
-  // Finally, we return the state variables and functions for external use
+   // Finally, we return the state variables and functions for external use
   return { 
     projects, 
-    nextPage,
-    previousPage,
     isLoading, 
     error, 
-    fetchNextPage, // Expose for "Next" button
-    fetchPreviousPage, // Expose for "Previous" button
   };
 }
