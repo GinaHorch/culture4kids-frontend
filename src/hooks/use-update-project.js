@@ -3,7 +3,7 @@ import updateProjectApi from "../api/update-project";
 import { useAuth } from "./use-auth";
 
 
-function useUpdateProject() {
+function useUpdateProject(refetchProjects) {
     const { auth } = useAuth();
     const [isUpdating, setIsUpdating] = useState(false);
     const [error, setError] = useState(null);
@@ -17,6 +17,10 @@ function useUpdateProject() {
             console.log("FormData in use-update-project:", Array.from(formData.entries()));
             return await updateProjectApi(projectId, auth.token, formData);
             
+            if (refetchProjects) {
+                await refetchProjects();
+            }
+
           } catch (error) {
             setError(error);
             console.error("Error updating project:", error);
