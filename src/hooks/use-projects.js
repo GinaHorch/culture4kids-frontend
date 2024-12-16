@@ -19,6 +19,8 @@ function useProjects() {
         const response = await fetch(nextPage);
         const data = await response.json();
 
+        console.log("Data from fetchProjects in use-projects:", data);  
+
         if (Array.isArray(data.results)) {
           allProjects = [...allProjects, ...data.results];
           nextPage = data.next; // URL for the next page
@@ -38,29 +40,24 @@ function useProjects() {
   };
 
   const updateProjectLocally = (updatedProject) => {
-    console.log("Updating project locally:", updatedProject);
     setProjects((prevProjects) =>
-      Array.isArray(prevProjects)
-        ? prevProjects.map((project) =>
-            project.id === updatedProject.id 
-            ? { ...project, ...updatedProject }
-            : project
+      prevProjects.map((project) =>
+        project.id === updatedProject.id ? { ...project, ...updatedProject } : project
         )
-      : [] // Fallback to prevent non-array issues
-    );
-};
-const refetchProjects = async () => {
-  try {
-    await fetchProjects(); // Call the existing fetchProjects function
-    console.log("Projects successfully refetched.");
-  } catch (error) {
-    console.error("Error refetching projects:", error);
-  }
-};
+      );
+    };
 
 useEffect(() => {
   fetchProjects(); // Initial fetch when component mounts
 }, []);
+
+console.log("useProjects returning:", { 
+  projects, 
+  isLoading, 
+  error, 
+  fetchProjects,
+  updateProjectLocally, 
+});
 
    // Finally, we return the state variables and functions for external use
   return { 
@@ -69,7 +66,6 @@ useEffect(() => {
     error, 
     fetchProjects,
     updateProjectLocally,
-    refetchProjects
   };
 }
 

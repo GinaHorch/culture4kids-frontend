@@ -23,14 +23,9 @@ function HomePage() {
     isLoading,
     error,
     updateProjectLocally,
-    refetchProjects
   } = useProjects();
 
   console.log("Projects data:", projects);
-
-  useEffect(() => {
-      refetchProjects();
-    }, []);
 
   return (
     <div className={styles.pageContainer}>

@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./ProjectsPage.css";
 
 function ProjectsPage() {
-  const { projects, isLoading, error, updateProjectLocally, refetchProjects } = useProjects();
+  const { projects, isLoading, error, updateProjectLocally } = useProjects();
   console.log("Projects in ProjectsPage:", projects);
   const { updateProject } = useUpdateProject(updateProjectLocally);
   const { auth } = useAuth();
@@ -15,19 +15,6 @@ function ProjectsPage() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
 
-  useEffect(() => {
-    refetchProjects();
-  }, []);
-
-   // Map numeric category values to category names
-  const categoryMap = {
-      1: "Aboriginal Art",
-      2: "Aboriginal Dancing",
-      3: "Aboriginal Languages",
-      4: "Bush Camps",
-      5: "Trips on Country",
-  };
-  
   const handleCreateFeedback = () => {
     if (!auth?.user?.is_organization) {
       setFeedbackMessage("You must be logged in as an organisation to create a project.");
@@ -40,13 +27,31 @@ function ProjectsPage() {
     setSelectedCategory(category);
   };
 
-  const handleProjectUpdate = async (projectId, formData) => {
-    try {
-      await updateProject(projectId, formData);
-      await refetchProjects(); // Refresh the project list after a successful update
-    } catch (err) {
-      console.error("Error updating project:", err);
+  const handleCreateProject = () => {
+    if (!auth?.token || auth?.role !== "organisation") {
+      alert("Only organisations can create projects.");
+      navigate("/login"); // Redirect to login if unauthenticated
+      return;
     }
+    navigate("/projects/create"); // Redirect to create project page
+  };
+  
+  // const handleProjectUpdate = async (projectId, formData) => {
+  //   try {
+  //     await updateProject(projectId, formData);
+  //     await refetchProjects(); 
+  //   } catch (err) {
+  //     console.error("Error updating project:", err);
+  //   }
+  // };
+
+  // Map numeric category values to category names
+  const categoryMap = {
+    1: "Aboriginal Art",
+    2: "Aboriginal Dancing",
+    3: "Aboriginal Languages",
+    4: "Bush Camps",
+    5: "Trips on Country",
   };
 
   // Filter projects based on selected category
@@ -93,7 +98,7 @@ function ProjectsPage() {
                         <ProjectCard 
                           key={project.id} 
                           projectData={project} 
-                          onUpdate={(formData) => handleProjectUpdate(project.id, formData)}
+                          onUpdate={(formData) => updateProject(project.id, formData)}
                         />
                     ))
                 ) : (

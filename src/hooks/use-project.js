@@ -1,24 +1,42 @@
 import { useState, useEffect } from "react";
-
 import getProject from "../api/get-project";
 
-export default function useProject(projectId) {
-  const [project, setProject] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+function useProject(projectId, projects = [], updateProjectLocally) {
+  const [project, setProject] = useState(() => {
+    const foundProject = projects.find((proj) => proj.id === projectId);
+    console.log("Initial project found in local state:", foundProject);
+    return foundProject;
+  });
+  
+  const [isLoading, setIsLoading] = useState(!project); // Avoid loading if project is already in state
   const [error, setError] = useState();
 
-  console.log("Project data:", project);
+  console.log("Current project state in use-project:", project);
   
   useEffect(() => {
-    // Reset loading and error state when projectId changes
-    setIsLoading(true);
-    setError(undefined);
-
+    const updatedProject = projects.find((proj) => proj.id === projectId);
+    if (updatedProject) {
+      setProject(updatedProject);
+    }
+  }, [project, projects, projectId]);
+  
+  useEffect(() => {
+    if (!project) {   // Fetch the project data if not available locally
+      console.log("Fetching project from API, project not found locally:", projectId);
+  
     const fetchProject = async () => {
       try {
-        const project = await getProject(projectId); // Fetch the project data
-        setProject(project); // Update project state
+        const fetchedProject = await getProject(projectId); // Fetch the project data
+        console.log("Project fetched from API in use-project:", fetchedProject);
+        setProject(fetchedProject); // Update project state
+
+        if (updateProjectLocally) {
+          console.log("Updating local state with fetched project in use-project:", fetchedProject);
+          updateProjectLocally(fetchedProject); // Update the local state
+        }
+
       } catch (error) {
+        console.error("Error fetching project:", error);
         setError(error); // Capture errors
       } finally {
         setIsLoading(false); // End the loading state
@@ -26,22 +44,12 @@ export default function useProject(projectId) {
     };
 
     fetchProject();
+  } else {
+    setIsLoading(false); // Ensure loading state is updated if project is found locally
+   }
+  }, [project, projectId, updateProjectLocally]);
 
-    // This time we pass the projectId to the dependency array so that the hook will re-run if the projectId changes.
-  }, [projectId]);
-
-  const refetch = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const project = await getProject(projectId);
-      setProject(project);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return { project, isLoading, error, refetch };
+  return { project, isLoading, error};
 }
+
+export default useProject;

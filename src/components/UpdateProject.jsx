@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import useUpdateProject from "../hooks/use-update-project";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth.js";
+import useProjects from "../hooks/use-projects";
+import useProject from "../hooks/use-project.js";
 import "./UpdateProject.css";
 
 function UpdateProject({ project }) {
@@ -10,10 +12,12 @@ function UpdateProject({ project }) {
     }
     const { id } = useParams();
     const navigate = useNavigate();
-    const { updateProject, isUpdating, error } = useUpdateProject();
+    const { projects, updateProjectLocally } = useProjects();
+    const { currentProject, isLoading } = useProject(id, projects, updateProjectLocally);
+    const { updateProject, isUpdating, error } = useUpdateProject(updateProjectLocally);
     const { auth } = useAuth();
     console.log("Auth object from useAuth hook:", auth);
-
+    
     const [formData, setFormData] = useState({
         title: project.title || "",
         description: project.description || "",
@@ -52,22 +56,14 @@ function UpdateProject({ project }) {
         });
         
         console.log("Constructed FormData:", Array.from(updatedFormData.entries()));
-        console.log("Token in UpdateProject:", auth.token);
         try {
             await updateProject(id, updatedFormData); // auth.token is passed automatically
             alert("Project updated successfully!");
-            navigate(`/projects/${id}`); // Redirect to the updated project page
+            navigate(`/projects`); // Redirect to the updated project page
           } catch (err) {
             console.error("Error updating project:", err);
         }
     };
-            // Add only changed fields to updatedData
-        // if (title !== originalProject.title) updatedData.title = formData.title;
-        // if (description !== originalProject.description) updatedData.description = formData.description;
-        // if (image !== originalProject.image) updatedData.image = formData.image;
-        // if (location !== originalProject.location) updatedData.location = formData.location;
-        // if (category !== originalProject.category) updatedData.category = formData.category;
-        // if (goal !== originalProject.goal) updatedData.goal = formData.goal;
         
         console.log("Token in UpdateProject:", auth?.token)
         if (!auth?.token) {
@@ -142,11 +138,11 @@ function UpdateProject({ project }) {
                     />
                 </label>
                 <label>
-                    Pledged:
+                    End Date:
                     <input
-                        type="number"
-                        name="pledged"
-                        value={formData.pledged}
+                        type="date"
+                        name="end_date"
+                        value={formData.end_date}
                         onChange={handleChange}
                     />
                 </label>
