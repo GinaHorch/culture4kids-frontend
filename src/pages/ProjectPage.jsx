@@ -60,7 +60,7 @@ function ProjectPage() {
             Created at: {new Date(project.date_created).toLocaleDateString()}
             </p>
             <img
-              src={project.image || "placeholder.jpg"} // Use placeholder if no image is provided
+              src={project.image || "../src/assets/Artpaintingimage.webp"} // Use placeholder if no image is provided
               alt={`${project.title} main image`}
               className="project-main-image"
             />
