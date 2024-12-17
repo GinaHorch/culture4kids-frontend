@@ -24,7 +24,7 @@ function useProject(projectId, projects = [], updateProjectLocally) {
     if (!project) {   // Fetch the project data if not available locally
       console.log("Fetching project from API, project not found locally:", projectId);
   
-    const fetchProject = async () => {
+  const fetchProject = async () => {
       try {
         const fetchedProject = await getProject(projectId); // Fetch the project data
         console.log("Project fetched from API in use-project:", fetchedProject);
@@ -49,7 +49,14 @@ function useProject(projectId, projects = [], updateProjectLocally) {
    }
   }, [project, projectId, updateProjectLocally]);
 
-  return { project, isLoading, error};
+  const updateProjectImageUrl = (projectId, imageUrl) => {
+    setProject((prevProject) => ({
+      ...prevProject,
+      image_url: imageUrl,
+    }));
+  };
+
+  return { project, isLoading, error, updateProjectImageUrl };
 }
 
 export default useProject;

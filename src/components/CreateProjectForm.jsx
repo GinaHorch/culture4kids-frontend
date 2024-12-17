@@ -53,15 +53,19 @@ function CreateProjectForm() {
     };
 
     const handleChange = (e) => {
+      console.log("handleChange called");
       const { name, value } = e.target;
       setFormData((prev) => ({ ...prev, [name]: value }));
     };
   
     const handleImageChange = (e) => {
+      console.log("handleImageChange called");
+      console.log("Selected image file:", e.target.files[0]);
       setFormData((prev) => ({ ...prev, image: e.target.files[0] }));
     };
   
     const handleCheckboxChange = (e) => {
+      console.log("handleCheckboxChange called");
       const { name, checked } = e.target;
       setFormData((prev) => ({ ...prev, [name]: checked }));
     };
@@ -73,10 +77,24 @@ function CreateProjectForm() {
       if (!validateForm()) return;
 
       console.log("Submitting project with auth token:", auth.token);
-      console.log("Form data being submitted:", formData);
-  
+      console.log(formData); // Log the form data object
+
+      const formDataToSubmit = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSubmit.append(key, value);
+      });
+
+      console.log(formDataToSubmit); // Log the FormData object
+      console.log(formDataToSubmit.get('title')); // Log the title field
+      console.log(formDataToSubmit.get('description')); // Log the description field
+      console.log(formDataToSubmit.get('target_amount')); // Log the target_amount field
+      console.log(formDataToSubmit.get('location')); // Log the location field
+
+      const createdProject = await createProject(formDataToSubmit, auth.token);
+      updateProjectImageUrl(createdProject.id, createdProject.image);
+
       try {
-        await createProject(formData, auth.token); // Call the hook to create a project
+        await createProject(formDataToSubmit, auth.token); // Call the hook to create a project
         alert("Project created successfully!");
         navigate("/projects"); // Redirect to the projects page
       } catch (error) {
@@ -181,7 +199,7 @@ function CreateProjectForm() {
         <input
           type="file"
           name="image"
-          accept="image/*"
+          // accept="image/*"
           onChange={handleImageChange}
         />
       </label>

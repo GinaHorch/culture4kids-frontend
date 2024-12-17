@@ -1,4 +1,5 @@
 import { useState } from "react";
+import postProject from "../api/post-project";
 
 export default function useCreateProject() {
   const [isCreating, setIsCreating] = useState(false);
@@ -12,24 +13,11 @@ export default function useCreateProject() {
     Object.keys(projectData).forEach((key) => {
       formData.append(key, projectData[key]);
     });
-
+    console.log('projectData in use-create-project:', projectData);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/projects/create/`, {
-        method: "POST",
-        headers: {
-          Authorization: `Token ${authToken}`,
-        },
-        body: formData,
-        credentials: "include",
-      });
-      console.log('Body:', formData);
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Failed to create project.");
-      }
-
-      return await response.json(); // Return the created project
+      const createdProject = await postProject(projectData, authToken);
+      console.log("Created Project in use-create-project:", createdProject);
+      return createdProject;
     } catch (error) {
       setCreateError(error.message);
       console.error("Error creating project:", error);

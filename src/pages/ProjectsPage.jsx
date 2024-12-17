@@ -26,25 +26,7 @@ function ProjectsPage() {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
-
-  const handleCreateProject = () => {
-    if (!auth?.token || auth?.role !== "organisation") {
-      alert("Only organisations can create projects.");
-      navigate("/login"); // Redirect to login if unauthenticated
-      return;
-    }
-    navigate("/projects/create"); // Redirect to create project page
-  };
   
-  // const handleProjectUpdate = async (projectId, formData) => {
-  //   try {
-  //     await updateProject(projectId, formData);
-  //     await refetchProjects(); 
-  //   } catch (err) {
-  //     console.error("Error updating project:", err);
-  //   }
-  // };
-
   // Map numeric category values to category names
   const categoryMap = {
     1: "Aboriginal Art",

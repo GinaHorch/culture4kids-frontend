@@ -10,6 +10,7 @@ function UpdateProject({ project }) {
     if (!project) {
         return <p>Project not found.</p>;
     }
+    const { updateProjectImageUrl } = useProject();
     const { id } = useParams();
     const navigate = useNavigate();
     const { projects, updateProjectLocally } = useProjects();
@@ -38,10 +39,9 @@ function UpdateProject({ project }) {
     };
 
     const handleImageChange = (e) => {
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            image: e.target.files[0],
-          })); 
+        console.log("handleImageChange called");
+        console.log("Selected image file:", e.target.files[0]);
+        setFormData((prevFormData) => ({ ...prevFormData, image: e.target.files[0] }));
     };
 
     const handleSubmit = async (e) => {
@@ -54,12 +54,15 @@ function UpdateProject({ project }) {
                 updatedFormData.append(key, value); // Append non-null fields
               }
         });
-        
+
         console.log("Constructed FormData:", Array.from(updatedFormData.entries()));
         try {
             await updateProject(id, updatedFormData); // auth.token is passed automatically
             alert("Project updated successfully!");
             navigate(`/projects`); // Redirect to the updated project page
+
+            // Call the updateProjectImageUrl function
+            updateProjectImageUrl(id, formData.image);
           } catch (err) {
             console.error("Error updating project:", err);
         }
@@ -133,7 +136,7 @@ function UpdateProject({ project }) {
                     <input
                         type="file"
                         name="image"
-                        accept="image/*"
+                        // accept="image/*"
                         onChange={handleImageChange}
                     />
                 </label>

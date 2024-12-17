@@ -19,8 +19,8 @@ function ProjectCard({projectData }) {
     <div className="project-card">
       <Link to={projectLink} onClick={() => console.log("Navigating to:", projectLink)}>
         <img 
-          src={projectData.image || "src/assets/Artpaintingimage.webp"} 
-          alt={`${projectData.title} || "undefined"} thumbnail`}
+          src={projectData.image_url || "src/assets/Artpaintingimage.webp"} // Use placeholder if no image is provided
+          alt={projectData.title} 
           className="project-image" 
         />
         <h3>{projectData.title}</h3>
