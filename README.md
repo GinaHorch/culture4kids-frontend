@@ -61,6 +61,8 @@ Please include the following in your readme doc:
 
 ### Key take aways
 - Optimistic updates are not so optimistic! After many attempts (2 days) of not so optimistic updates with having to manually refresh the page after updates there is the useNavigation function as alternative.
+- Pillow and pillow - we are case-sensitive - but only sometimes, it depends, and we are not an installed app, so don't add Pillow to settings.py at INSTALLED_APPS.
+- Static and media don't like to mix, even just for the purposes of an assignment! Keep them separate in settings.py!
 - Although you use Bearer Token in Insomnia, you need to write in your authentication header in the frontend Authorization: `Token ${authToken}` and sometimes the page requires you to write .token, or authToken or just token - go with the flow
 - Order matters! When auth.token and formData were in a different order, well it tried to use formData as token and the token as formData... e.g., updateProjectApi(projectId, auth.token, formData);
 - Your base URL matters, does it have a / or not? This will determine if fetch(`${import.meta.env.VITE_API_URL}/api-token-auth/`) works, or if it only works without / before api-token-auth/
