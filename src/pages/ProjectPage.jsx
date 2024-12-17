@@ -5,6 +5,7 @@ import useProject from "../hooks/use-project";
 import UpdateProject from "../components/UpdateProject";
 import { calculatePledges } from "../utils/projectUtils";
 import MakePledgeForm from "../components/MakePledgeForm";
+import placeholderImage from "../assets/Artpaintingimage.webp"; 
 import "./ProjectPage.css";
 
 function ProjectPage() {
@@ -39,6 +40,9 @@ function ProjectPage() {
       // Calculate pledges
     const { totalPledges, remaining } = calculatePledges(project);
 
+    console.log("project.image:", project.image);
+    console.log("placeholderImage:", placeholderImage);
+
     return (
         <div className="project-details">
           <header className="project-header">
@@ -57,11 +61,11 @@ function ProjectPage() {
             {project.is_open ? "Status: Open for Pledges" : "Status: Closed"}
             </p>  
             <p className="project-date">
-            Created at: {new Date(project.date_created).toLocaleDateString()}
+            Created at: {new Date(project.date_created).toLocaleDateString()}    
             </p>
             <img
-              src={project.image || "../src/assets/Artpaintingimage.webp"} // Use placeholder if no image is provided
-              alt={`${project.title} main image`}
+              src={project.image || placeholderImage} // Use placeholder if no image is provided
+              alt={project.title || "Placeholder image"}
               className="project-main-image"
             />
             {auth?.role === "organisation" && (

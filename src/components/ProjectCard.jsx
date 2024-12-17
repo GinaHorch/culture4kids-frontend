@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { calculatePledges } from "../utils/projectUtils";
+import placeholderImage from "../assets/Artpaintingimage.webp";
 import "./ProjectCard.css";
 
 function ProjectCard({projectData }) {
@@ -19,7 +20,7 @@ function ProjectCard({projectData }) {
     <div className="project-card">
       <Link to={projectLink} onClick={() => console.log("Navigating to:", projectLink)}>
         <img 
-          src={projectData.image_url || "src/assets/Artpaintingimage.webp"} // Use placeholder if no image is provided
+          src={projectData.image || placeholderImage} // Use placeholder if no image is provided
           alt={projectData.title} 
           className="project-image" 
         />
