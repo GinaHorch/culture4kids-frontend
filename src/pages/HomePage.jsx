@@ -45,7 +45,7 @@ function HomePage() {
         <h2>Explore Projects</h2>
         <div id="project-list" role="list" className={styles.projectList}>
           {isLoading && <LoadingState />}
-          {error && <ErrorState message={error.message} onRetry={fetchNextPage} />}
+          {error && <ErrorState message={error.message} />}
           {!isLoading && !error ? (
             Array.isArray(projects) && projects.length > 0 ? (
               <>

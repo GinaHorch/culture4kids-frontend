@@ -41,9 +41,8 @@ Note that while this is a crowdfunding website, actual money transactions are ou
 You can browse projects by category
 
     ### Only organisations are able to create projects and see the create project button. 
-    Example organisation user to test functionality (or just sign up as organisation)
-    "username": "test2organisation",
-    "password": "newpassword123"
+    Please sign up as an organisation to test create/update functionality.
+        
     ### Anyone who is signed in can make pledges, however, you can chose to be anonymous.
 
 ## Submission

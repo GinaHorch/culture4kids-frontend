@@ -17,8 +17,14 @@ function useProjects() {
     try {
       while (nextPage) {
         const response = await fetch(nextPage);
-        const data = await response.json();
 
+        if (!response.ok) {
+          console.error(`Server Error: ${response.status}`);
+          setError(`Error: ${response.statusText}`);
+          break;
+        }
+
+        const data = await response.json();
         console.log("Data from fetchProjects in use-projects:", data);  
 
         if (Array.isArray(data.results)) {
@@ -26,6 +32,7 @@ function useProjects() {
           nextPage = data.next; // URL for the next page
         } else {
           console.error("Unexpected data format in use-projects Hook", data);
+          setError("Unexpected data format");
           break;
         }
       }
