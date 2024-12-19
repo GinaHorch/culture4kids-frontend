@@ -28,7 +28,7 @@ Here's a reminder of the required features. Your crowdfunding project must:
   - [X] The supporter/user (i.e. who created the pledge)
   - [X] Whether the pledge is anonymous or not
   - [X] A comment to go along with the pledge
-- [X] Implement suitable update/delete functionality, e.g. should a project owner be allowed to update a project description?
+- [X] Implement suitable update/delete functionality, e.g. should a project owner be allowed to update a project description? Project owners will be able to make changes, however, for transparency and accountability, projects cannot be deleted, they will be archived as inactive projects instead.
 - [] Implement suitable permissions, e.g. who is allowed to delete a pledge?
 - [X] Return the relevant status codes for both successful and unsuccessful requests to the API.
 - [] Handle failed requests gracefully (e.g. you should have a custom 404 page rather than the default error page).
