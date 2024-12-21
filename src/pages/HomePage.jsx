@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useProjects from "../hooks/use-projects";
-// import useUpdateProject from "../hooks/use-update-project";
 import ProjectCard from "../components/ProjectCard";
 import styles from "./HomePage.module.css";
 import "./HomePage.css";
