@@ -14,6 +14,7 @@ function MakePledgeForm({ projectId, remainingAmount }) {
   const [comment, setComment] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [isAnonymous, setIsAnonymous] = useState(false); // New state for anonymous pledge
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +34,8 @@ function MakePledgeForm({ projectId, remainingAmount }) {
         body: JSON.stringify({ 
           amount: pledgeAmount, 
           comment, 
-          project: projectId 
+          project: projectId, 
+          anonymous: isAnonymous, // Include anonymous flag in the request
         }),
       });
 
@@ -76,6 +78,16 @@ function MakePledgeForm({ projectId, remainingAmount }) {
             onChange={(e) => setComment(e.target.value)}
             placeholder="Add a message to your pledge..."
           ></textarea>
+        </div>
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={isAnonymous}
+              onChange={(e) => setIsAnonymous(e.target.checked)}
+            />
+            Make this pledge anonymous
+          </label>
         </div>
         <button type="submit">Submit Pledge</button>
       </form>

@@ -85,7 +85,7 @@ function ProjectPage() {
               <ul>
                 {project.pledges.map((pledge, index) => (
                   <li key={index}>
-                    ${pledge.amount} from {pledge.supporter || "Anonymous"}
+                    ${pledge.amount} from {pledge.anonymous ? "Anonymous" : pledge.supporter}
                   </li>
                 ))}
               </ul>
