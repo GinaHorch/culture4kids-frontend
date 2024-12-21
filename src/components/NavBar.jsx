@@ -66,7 +66,7 @@ function NavBar() {
                   <Link to="/login" onClick={closeMenu}>Login</Link>
                 </li>
                 <li role="menuitem">
-                  <a href="/signup" onClick={closeMenu}>Sign Up</a>
+                  <Link to="/signup" onClick={closeMenu}>Sign Up</Link>
                 </li>
               </>
             )}
