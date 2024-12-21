@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import useProjects from "../hooks/use-projects";
-import useUpdateProject from "../hooks/use-update-project";
+// import useUpdateProject from "../hooks/use-update-project";
 import ProjectCard from "../components/ProjectCard";
 import styles from "./HomePage.module.css";
+import "./HomePage.css";
 
 function LoadingState() {
   return <p>Loading projects...</p>;
@@ -21,11 +23,12 @@ function HomePage() {
   const {
     projects,
     isLoading,
-    error,
-    updateProjectLocally,
+    error
   } = useProjects();
 
   console.log("Projects data:", projects);
+
+  const visibleProjects = projects?.slice(0, 6); // Limit to 6 projects
 
   return (
     <div className={styles.pageContainer}>
@@ -45,11 +48,11 @@ function HomePage() {
         <h2>Explore Projects</h2>
         <div id="project-list" role="list" className={styles.projectList}>
           {isLoading && <LoadingState />}
-          {error && <ErrorState message={error.message} />}
-          {!isLoading && !error ? (
-            Array.isArray(projects) && projects.length > 0 ? (
-              <>
-                {projects.map((projectData) => (
+
+          {error && <ErrorState message={error.message} onRetry={() => window.location.reload()} />}
+
+          {!isLoading && !error && visibleProjects?.length > 0 ? (
+            visibleProjects.map((projectData) => (
                   <div
                     key={projectData.id}
                     role="listitem"
@@ -57,15 +60,21 @@ function HomePage() {
                   >
                     <ProjectCard projectData={projectData} />
                   </div>
-                ))}
-              </>
+                ))
             ) : (
-              <p>No projects available</p>
-            )
-          ) : null}
+              !isLoading && !error && visibleProjects.length === 0 && (
+              <p>No projects available. Check back later!</p>
+              )
+            )}
+          </div>
         </div>
+
+        <footer className={styles.footer}>
+          <Link to="/projects" className={styles.viewAllButton}>
+            View All Projects
+          </Link>
+        </footer>
       </div>
-    </div>
   );
 }
 

@@ -2,8 +2,9 @@
 .pageContainer {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Full viewport height */
+  min-height: 100vh; /* Full viewport height */
   margin: 0;
+  gap: 0.5rem;
 }
 
 /* Hero Section */
@@ -12,16 +13,15 @@
   background-size: cover;
   background-position: center;
   color: white;
-  min-height: 40vh; /* Minimum height */
-  flex: 1; /* Take up half the page */
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding: 1rem;
 }
 
 .heroContent {
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for text */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay for text */
   padding: 2.5rem;
   border-radius: 10px;
   animation: fadeIn 1.2s ease-out;
@@ -40,48 +40,140 @@
 
 .hero h1 {
   font-size: 3rem;
-  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #ffffff; /* Text color for contrast */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for text */
 }
 
 .hero p {
   font-size: 1.3rem;
-  margin-bottom: 0;
+  color: #f0f0f0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Projects Section */
 .projectsSection {
-  min-height: 60vh; /* Minimum height */
-  background-color: #f8f8f8;
-  padding-top: 2rem;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.8)
+  ),
+  url('../assets/Artpaintingimage.webp'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
 }
 
 .projectsSection h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #3c2f2f; /* Text color for contrast */
+}
+
+.projectsSection h2,
+.projectsSection .projectList {
+  position: relative;
+  z-index: 2;
+}
+
+.projectsSection h3 {
   font-size: 2rem;
   margin-bottom: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #3c2f2f; /* Text color for contrast */
 }
 
 .projectList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 0 1rem;
-  min-height: 60vh; /* Minimum height */
+  gap: 2rem;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1rem;
+  
 }
 
 .projectCard {
-  background: #fff;
-  color: #333;
+  background: rgba(255, 255, 255, 0.95); /* Semi-transparent background for readability */
+  border: 1px solid #e0e0e0;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .projectCard:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px); /* Elevation effect on hover */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
+
+.projectCard h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #3c2f2f;
+}
+
+.projectCard p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #555555;;
+}
+
+.projectCard img {
+  max-height: 150px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+/* footer */
+.footer {
+  text-align: center;
+  padding: 2rem 0;
+  background-color: #3c2f2f; /* Match navbar color */
+  color: white;
+  margin-top: auto; /* Space between projects and footer */
+}
+
+/* View All Projects Button */
+.viewAllButton {
+  background-color: white; /* Vibrant button color */
+  color: #3c2f2f; /* Text color */
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-weight: bold;
+}
+
+.viewAllButton:hover {
+  background-color: #f0c14b; /* Vibrant accent color */
+  transform: translateY(-3px); /* Subtle hover effect */
+}
+
+.viewAllButton:active {
+  transform: scale(0.97); /* Press effect */
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -95,6 +187,16 @@
 
   .projectsSection {
     padding: 1rem 0.5rem;
+    background-position: center top; /* Adjust logo positioning for smaller screens */
+  }
+
+  .projectsSection h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .projectCard {
+    padding: 1rem;
   }
 
   .projectList {
@@ -106,12 +208,28 @@
   .projectList {
     grid-template-columns: 1fr;
   }
-  
+
   .hero h1 {
     font-size: 1.5rem;
   }
 
   .hero p {
     font-size: 1rem;
+  }
+
+  .projectsSection {
+    background-size: 50%; /* Reduce logo size for small screens */
+  }
+
+  .projectsSection h2 {
+    font-size: 1.5rem;
+  }
+
+  .projectCard h3 {
+    font-size: 1rem;
+  }
+
+  .projectCard p {
+    font-size: 0.9rem;
   }
 }
