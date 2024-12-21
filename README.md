@@ -33,7 +33,7 @@ Here's a reminder of the required features. Your crowdfunding project must:
 - [X] Return the relevant status codes for both successful and unsuccessful requests to the API.
 - [X] Handle failed requests gracefully (e.g. you should have a custom 404 page rather than the default error page).
 - [X] Use Token Authentication.
-- [] Implement responsive design.
+- [X] Implement responsive design.
 
 ## Additional Notes
 No additional libraries or frameworks, other than what we use in class, are allowed unless approved by the Lead Mentor.
@@ -50,13 +50,16 @@ To submit, fill out [this Google form](https://forms.gle/34ymxgPhdT8YXDgF6), inc
 
 Please include the following in your readme doc:
 - [X] A link to the deployed project. https://sparkling-torte-d2718c.netlify.app/
-- [ ] A screenshot of the homepage
+- [X] A screenshot of the homepage
 - [ ] A screenshot of the project creation page
 - [ ] A screenshot of the project creation form
 - [ ] A screenshot of a project with pledges
-- [ ] A screenshot of the resulting page when an unauthorized user attempts to edit a project (optional, depending on whether or not this functionality makes sense in your app!
+- [ ] A screenshot of the resulting page when an unauthorized user attempts to edit a project
 
-
+### Screenshots
+![Homepage](/screenshots/HomePage-top.png)
+![Homepage](/screenshots/HomePage-bottom.png)
+![Homepage](/screenshots/HomePage-responsive-burger.png)
 
 ### Key take aways
 - Optimistic updates are not so optimistic! After many attempts (2 days) of not so optimistic updates with having to manually refresh the page after updates there is the useNavigation function as alternative.
