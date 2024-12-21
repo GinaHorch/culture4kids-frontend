@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import NotFoundPage from "./pages/NotFoundPage";
 
 // Here we import pages
 import HomePage from "./pages/HomePage";
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {path: "/projects", element: <ProjectsPage />},
       {path: "/projects/:id", element: <ProjectPage />},
       {path: "/projects/create", element: <CreateProjectForm />},
+      {
+        path: '*',
+        element: <NotFoundPage />,
+      },
     ],
   },
 ]);
