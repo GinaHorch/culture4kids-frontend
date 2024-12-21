@@ -10,6 +10,14 @@ function NavBar() {
     const [menuOpen, setMenuOpen] = useState(false); // State for toggling burger menu
     console.log("Rendering NavBar");
 
+    const toggleMenu = () => {
+      setMenuOpen(!menuOpen);
+    };
+  
+    const closeMenu = () => {
+      setMenuOpen(false);
+    };
+
     const handleLogout = () => {
         const confirmLogout = window.confirm("Are you sure you want to log out?");
         if (confirmLogout) {
@@ -26,8 +34,8 @@ function NavBar() {
           </Link>
 
           <div
-            className={`burger-menu ${menuOpen ? "open" : ""}`}
-            onClick={() => setMenuOpen(!menuOpen)}
+            className="burger-menu" onClick={toggleMenu}
+            role="button"
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
           >
@@ -36,12 +44,13 @@ function NavBar() {
             <div className="burger-bar"></div>
           </div>
 
+          {menuOpen && <div className="overlay" onClick={closeMenu}></div>}
           <ul className={`navbar-links ${menuOpen ? "open" : ""}`} role="menu" aria-label="Navigation Links">
             <li role="menuitem">
-              <Link to="/">Home</Link>
+              <Link to="/" onClick={closeMenu}>Home</Link>
             </li>
             <li role="menuitem">
-              <Link to="/projects">Projects</Link>
+              <Link to="/projects" onClick={closeMenu}>Projects</Link>
             </li>
             {auth.token ? (
               <>
@@ -54,10 +63,10 @@ function NavBar() {
             ) : (
               <>
                 <li role="menuitem">
-                  <Link to="/login">Login</Link>
+                  <Link to="/login" onClick={closeMenu}>Login</Link>
                 </li>
                 <li role="menuitem">
-                  <Link to="/signup">Sign Up</Link>
+                  <a href="/signup" onClick={closeMenu}>Sign Up</a>
                 </li>
               </>
             )}
