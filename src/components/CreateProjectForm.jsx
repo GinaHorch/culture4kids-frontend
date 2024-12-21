@@ -90,11 +90,8 @@ function CreateProjectForm() {
       console.log(formDataToSubmit.get('target_amount')); // Log the target_amount field
       console.log(formDataToSubmit.get('location')); // Log the location field
 
-      const createdProject = await createProject(formDataToSubmit, auth.token);
-      updateProjectImageUrl(createdProject.id, createdProject.image);
-
       try {
-        await createProject(formDataToSubmit, auth.token); // Call the hook to create a project
+        const createdProject = await createProject(formDataToSubmit, auth.token);
         alert("Project created successfully!");
         navigate("/projects"); // Redirect to the projects page
       } catch (error) {
