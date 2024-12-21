@@ -5,6 +5,10 @@ function useProject(projectId, projects = [], updateProjectLocally) {
   const [project, setProject] = useState(() => {
     const foundProject = projects.find((proj) => proj.id === projectId);
     console.log("Initial project found in local state:", foundProject);
+    if (!foundProject && projectId) {
+      console.log(`Project not found in local state for id: ${projectId}, fetching from API`);
+    
+    }  
     return foundProject;
   });
   
@@ -21,18 +25,25 @@ function useProject(projectId, projects = [], updateProjectLocally) {
   }, [project, projects, projectId]);
   
   useEffect(() => {
+    if (!projectId) {
+      console.warn("useProject: projectId is undefined, skipping fetch.");
+      setError(new Error("Invalid project ID"));
+      setIsLoading(false);
+      return;
+    }
+
     if (!project) {   // Fetch the project data if not available locally
       console.log("Fetching project from API, project not found locally:", projectId);
   
-  const fetchProject = async () => {
-      try {
-        const fetchedProject = await getProject(projectId); // Fetch the project data
-        console.log("Project fetched from API in use-project:", fetchedProject);
-        setProject(fetchedProject); // Update project state
-
-        if (updateProjectLocally) {
-          console.log("Updating local state with fetched project in use-project:", fetchedProject);
-          updateProjectLocally(fetchedProject); // Update the local state
+      const fetchProject = async () => {
+        try {
+          const fetchedProject = await getProject(projectId); // Fetch the project data
+          console.log("Project fetched from API in use-project:", fetchedProject);
+          setProject(fetchedProject); // Update project state
+  
+          if (updateProjectLocally) {
+            console.log("Updating local state with fetched project in use-project:", fetchedProject);
+            updateProjectLocally(fetchedProject); // Update the local state
         }
 
       } catch (error) {

@@ -12,6 +12,12 @@ function useUpdateProject(updateProjectLocally) {
         setIsUpdating(true);
         setError(null);
 
+        if (!auth.token) {
+          setError(new Error("Authentication token is missing."));
+          setIsUpdating(false);
+          return;
+        }
+
         try {
             console.log("Token in use-update-project:", auth.token);
             console.log("FormData in use-update-project:", Array.from(formData.entries()));
@@ -25,6 +31,7 @@ function useUpdateProject(updateProjectLocally) {
           } catch (error) {
             setError(error);
             console.error("Error updating project:", error);
+            return { success: false, error }; // Optionally return this for more control
           } finally {
             setIsUpdating(false);
           }

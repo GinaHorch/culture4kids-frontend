@@ -12,10 +12,14 @@ function UpdateProject({ project }) {
     }
     const { updateProjectImageUrl } = useProject();
     const { id } = useParams();
+    console.log("UpdateProject.jsx - id:", id);
     const navigate = useNavigate();
     const { projects, updateProjectLocally } = useProjects();
+    console.log("UpdateProject.jsx - project from useProject:", project);
     const { currentProject, isLoading } = useProject(id, projects, updateProjectLocally);
+    console.log("UpdateProject.jsx - currentProject from useProject:", currentProject);
     const { updateProject, isUpdating, error } = useUpdateProject(updateProjectLocally);
+    console.log("UpdateProject.jsx - updateProject from useUpdateProject:", updateProject);
     const { auth } = useAuth();
     console.log("Auth object from useAuth hook:", auth);
     
