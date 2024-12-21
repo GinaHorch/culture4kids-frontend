@@ -2,13 +2,14 @@
 .navbar {
   background-color: #3c2f2f; /* Earthy dark tone */
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   position: sticky;
   top: 0;
   z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-container {
@@ -18,10 +19,17 @@
 }
 
 .navbar-logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  color: white;
+  display: flex;
+  align-items: center;  
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.navbar-logo-img {
+  height: 60px;
+  width: auto;
+  border-radius: 50%;
+  object-fit: contain;
 }
 
 .navbar-links {
@@ -29,21 +37,25 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  gap: 1.5rem;
 }
 
 .navbar-links li {
-  margin: 0 1rem;
+  margin: 0;
 }
 
 .navbar-links a {
   text-decoration: none;
   color: white;
   font-size: 1rem;
+  font-weight: bold;
   transition: color 0.3s ease;
 }
 
-.navbar-links a:hover {
+.navbar-links a:hover,
+.navbar-links a:focus {
   color: #f0c14b; /* Vibrant accent color */
+  outline: none;
 }
 
 /* Burger Menu */
@@ -52,7 +64,7 @@
   cursor: pointer;
   flex-direction: column;
   justify-content: space-between;
-  height: 20px;
+  height: 18px;
   width: 25px;
 }
 
@@ -76,8 +88,10 @@
     position: absolute;
     top: 60px;
     right: 0;
-    width: 100%;
-    padding: 1rem;
+    left: 0;
+    text-align: center;
+    padding: 1.5rem;
+    z-index: 9;
   }
 
   .navbar-links.open {
@@ -87,4 +101,25 @@
   .navbar-links li {
     margin: 0.5rem 0;
   }
+
+  .navbar-links a {
+    font-size: 1.2rem; /* Larger font size for readability */
+  }
+
+  .navbar-logo-img {
+    height: 50px; /* Smaller logo on smaller screens */
+  }
 }
+
+/* Accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }

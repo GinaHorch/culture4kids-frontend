@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth.js";
 import { useState } from "react";
+import logo from "../assets/LogoCulture4Kids.png";
 
 import "./NavBar.css";
 
@@ -18,28 +19,33 @@ function NavBar() {
 
     return (
       <div>
-        <nav className="navbar">
+        <nav className="navbar" role="navigation" aria-label="Main Navigation">
           <Link to="/" className="navbar-logo">
-            Culture4Kids
+          <img src={logo} alt="Culture4Kids Logo" className="navbar-logo-img" />
+          <span className="sr-only">Culture4Kids Home</span> {/* Screen reader only */}
           </Link>
+
           <div
             className={`burger-menu ${menuOpen ? "open" : ""}`}
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
           >
             <div className="burger-bar"></div>
             <div className="burger-bar"></div>
             <div className="burger-bar"></div>
           </div>
-          <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
-            <li>
+
+          <ul className={`navbar-links ${menuOpen ? "open" : ""}`} role="menu" aria-label="Navigation Links">
+            <li role="menuitem">
               <Link to="/">Home</Link>
             </li>
-            <li>
+            <li role="menuitem">
               <Link to="/projects">Projects</Link>
             </li>
             {auth.token ? (
               <>
-                <li>
+                <li role="menuitem">
                   <Link to="/" onClick={handleLogout}>
                     Log Out
                   </Link>
@@ -47,10 +53,10 @@ function NavBar() {
               </>
             ) : (
               <>
-                <li>
+                <li role="menuitem">
                   <Link to="/login">Login</Link>
                 </li>
-                <li>
+                <li role="menuitem">
                   <Link to="/signup">Sign Up</Link>
                 </li>
               </>
