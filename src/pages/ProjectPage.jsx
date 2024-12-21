@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth";
 import useProject from "../hooks/use-project";
@@ -6,6 +6,7 @@ import UpdateProject from "../components/UpdateProject";
 import { calculatePledges } from "../utils/projectUtils";
 import MakePledgeForm from "../components/MakePledgeForm";
 import placeholderImage from "../assets/Artpaintingimage.webp"; 
+import deletePledge from "../api/delete-pledge";
 import "./ProjectPage.css";
 
 function ProjectPage() {
@@ -16,6 +17,9 @@ function ProjectPage() {
     const { project, isLoading, error } = useProject(id); 
       
     const [isUpdating, setIsUpdating] = useState(false);
+    const [pledges, setPledges] = useState(project?.pledges || []);
+    const [deleteError, setDeleteError] = useState(null);
+    
     console.log("ProjectPage ID:", id);
 
     if (!id) {
@@ -23,6 +27,12 @@ function ProjectPage() {
         return <p>Invalid project ID.</p>;
     }
       
+    useEffect(() => {
+      if (project) {
+        setPledges(project.pledges || []);
+      }
+    }, [project]);
+
     if (isLoading) {
         return (<p>Loading project details...</p>)
     }
@@ -42,6 +52,17 @@ function ProjectPage() {
 
     console.log("project.image:", project.image);
     console.log("placeholderImage:", placeholderImage);
+
+    // Handle pledge deletion
+    const handleDeletePledge = async (pledgeId) => {
+      setDeleteError(null); // Reset any previous error
+      try {
+        await deletePledge(pledgeId, auth.token);
+        setPledges((prevPledges) => prevPledges.filter((pledge) => pledge.id !== pledgeId));
+      } catch (err) {
+        setDeleteError(err.message);
+      }
+    };
 
     return (
         <div className="project-details">
@@ -81,11 +102,21 @@ function ProjectPage() {
               
           <section className="project-pledges">
             <h3>Pledges</h3>
-            {project.pledges.length > 0 ? (
+            {/* {project.pledges.length > 0 ? ( */}
+            {deleteError && <p className="error-message">{deleteError}</p>}
+            {pledges.length > 0 ? (
               <ul>
-                {project.pledges.map((pledge, index) => (
-                  <li key={index}>
+                {pledges.map((pledge) => (
+                  <li key={pledge.id}>
                     ${pledge.amount} from {pledge.anonymous ? "Anonymous" : pledge.supporter}
+                    {pledge.supporter_id === auth?.user?.id && ( // Show delete button for the user's own pledges
+                    <button
+                    className="delete-pledge-btn"
+                    onClick={() => handleDeletePledge(pledge.id)}
+                  >
+                    Delete
+                  </button>
+                )}
                   </li>
                 ))}
               </ul>

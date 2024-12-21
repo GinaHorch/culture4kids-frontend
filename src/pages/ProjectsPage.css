@@ -28,3 +28,18 @@
     background-color: #007bff;
     color: white;
   }
+
+  .delete-pledge-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .delete-pledge-btn:hover {
+    background-color: darkred;
+  }
+  
