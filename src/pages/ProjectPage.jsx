@@ -70,6 +70,7 @@ function ProjectPage() {
             <h2>Project Details</h2>           
           </header>
           
+          <div className="project-info-tile">
             <p>Title: {project.title}</p>
             <p>Description: {project.description}</p> 
             <p>Location: {project.location}</p>
@@ -83,12 +84,7 @@ function ProjectPage() {
             </p>  
             <p className="project-date">
             Created at: {new Date(project.date_created).toLocaleDateString()}    
-            </p>
-            <img
-              src={project.image || placeholderImage} // Use placeholder if no image is provided
-              alt={project.title || "Placeholder image"}
-              className="project-main-image"
-            />
+            </p>            
             {auth?.role === "organisation" && (
               <>
                 <button 
@@ -99,7 +95,14 @@ function ProjectPage() {
                 {isUpdating && <UpdateProject project={project}/>}
               </>
             )}
-              
+          </div>
+          
+          <img
+            src={project.image || placeholderImage} // Use placeholder if no image is provided
+            alt={project.title || "Placeholder image"}
+            className="project-main-image"
+          />
+          
           <section className="project-pledges">
             <h3>Pledges</h3>
             {/* {project.pledges.length > 0 ? ( */}

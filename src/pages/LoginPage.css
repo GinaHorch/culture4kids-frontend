@@ -124,12 +124,12 @@ input[type="password"]:focus {
 
 .toggle-form-button:hover {
   color: #ffffff;
-  background-color: #3c2f2f; /* Add a solid background color for better readability */
+  background-color: #f0c14b; /* Add a solid background color for better readability */
 }
 
 .toggle-form-button:focus {
   outline: 2px solid #ffffff;
-  box-shadow: 0 0 5px rgba(60, 47, 47, 0.5); /* Subtle focus effect */
+  box-shadow: 0 0 5px rgba(240, 193, 75, 0.5); /* Subtle focus effect */
 }
 
 .toggle-form-button:active {

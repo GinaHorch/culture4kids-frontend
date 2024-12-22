@@ -39,13 +39,13 @@
   color: #3c2f2f;
 }
 
-.project-status {
+.project-details .project-status {
   font-size: 1.2rem;
   font-weight: bold;
   color: #28a745; /* Green for "Open" */
 }
 
-.project-status.closed {
+.project-details .project-status.closed {
   color: #dc3545; /* Red for "Closed" */
 }
 
@@ -131,20 +131,20 @@
 
 /* Update Project Button */
 .update-project-btn {
-  background-color: #007bff; /* Blue button */
+  background-color: #3c2f2f;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-top: 1.5rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .update-project-btn:hover {
-  background-color: #0056b3;
+  background-color: #f0c14b;
   transform: scale(1.02);
 }
 
