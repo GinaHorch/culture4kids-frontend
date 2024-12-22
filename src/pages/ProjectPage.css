@@ -166,6 +166,11 @@
   transform: scale(0.98);
 }
 
+.project-pledges.disabled {
+  pointer-events: none; /* Prevent interactions */
+  opacity: 0.5; /* Grey out the section */
+}
+
 /* Error Message */
 .error-message {
   font-size: 1rem;

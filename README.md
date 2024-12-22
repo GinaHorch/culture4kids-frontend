@@ -47,6 +47,8 @@ You can browse projects by category
 
     ### I have not yet invested in cloud options, so uploaded project images are not stable and disappear eventually.
 
+    ### I am only using useEffect to visually grey out the Make a Pledge section when the project is closed. I have not added an API call to update the project on the backend.
+
 ## Submission
 To submit, fill out [this Google form](https://forms.gle/34ymxgPhdT8YXDgF6), including a link to your Github repo. Your lead mentor will respond with any feedback they can offer, and you can approach the mentoring team if you would like help to make improvements based on this feedback!
 
@@ -68,6 +70,7 @@ Please include the following in your readme doc:
 ![ProjectPledge](/screenshots/ProjectPledge.png)
 ![LoginPrompt](/screenshots/LoginPromptToPledge.png)
 ![UpdateProject](/screenshots/UpdateProjectForm.png)
+![ClosedProject](/screenshots/ClosedProject.png)
 
 ### Key take aways
 - Optimistic updates are not so optimistic! After many attempts (2 days) of not so optimistic updates with having to manually refresh the page after updates there is the useNavigation function as alternative.

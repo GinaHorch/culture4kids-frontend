@@ -30,22 +30,30 @@ function ProjectPage() {
     useEffect(() => {
       if (project) {
         setPledges(project.pledges || []);
+      }    
+    }, [project]);
+
+    useEffect(() => {
+      if (project && project.end_date) {
+        const currentDate = new Date();
+        const endDate = new Date(project.end_date);
+    
+        if (currentDate > endDate && project.is_open) {
+          // Update project status locally
+          project.is_open = false; // Note: This won't persist the status to the backend
+        }
       }
     }, [project]);
 
-    if (isLoading) {
+      if (isLoading) {
         return (<p>Loading project details...</p>)
-    }
-        
-    if (error) {
+      }
+      if (error) {
         return (<p>Error: {error.message}</p>)
-    }
-
-      // Safely handle cases where project data might be undefined
-    if (!project) {
+      }
+      if (!project) {
         return <p>Project not found.</p>;
-    }
-
+      }
   
       // Calculate pledges
     const { totalPledges, remaining } = calculatePledges(project);
@@ -103,7 +111,7 @@ function ProjectPage() {
             className="project-main-image"
           />
 
-          <section className="project-pledges">
+          <section className={`project-pledges ${project.is_open ? "" : "disabled"}`}>
             <h3>Pledges</h3>
             {deleteError && <p className="error-message">{deleteError}</p>}
             {pledges.length > 0 ? (
@@ -138,7 +146,11 @@ function ProjectPage() {
             ) : (
               <p>No pledges yet. Be the first to contribute!</p>
             )}
+           {project.is_open ? ( 
             <MakePledgeForm projectId={id} remainingAmount={remaining} />
+          ) : (
+            <p className="closed-message">This project is closed for pledges.</p>
+          )}
           </section>
         </div>
     );
