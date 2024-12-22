@@ -101,6 +101,11 @@ function CreateProjectForm() {
   }; 
   
   return (
+    <div className="create-project-page">
+          <header className="create-project-header">
+            <h2>Create your new project</h2>           
+          </header>
+
     <form className="create-project-form" onSubmit={handleSubmit}>
       {apiError && <p className="error" style={{ color: "red" }}>{apiError}</p>}
 
@@ -181,7 +186,7 @@ function CreateProjectForm() {
         {errors.category && <p className="error">{errors.category}</p>}
       </label>
 
-      <label>
+      <label className="checkbox-container">
         Is the project open for pledges?:
         <input
           type="checkbox"
@@ -203,6 +208,7 @@ function CreateProjectForm() {
   
       <button type="submit">Create Project</button>
     </form>
+  </div>
   );
 }
 

@@ -43,7 +43,9 @@ You can browse projects by category
     ### Only organisations are able to create projects and see the create project button. 
     Please sign up as an organisation to test create/update functionality.
         
-    ### Anyone who is signed in can make pledges, however, you can chose to be anonymous.
+    ### Anyone who is signed in can make pledges, however, you can choose to be anonymous.
+
+    ### I have not yet invested in cloud options, so uploaded project images are not stable and disappear eventually.
 
 ## Submission
 To submit, fill out [this Google form](https://forms.gle/34ymxgPhdT8YXDgF6), including a link to your Github repo. Your lead mentor will respond with any feedback they can offer, and you can approach the mentoring team if you would like help to make improvements based on this feedback!

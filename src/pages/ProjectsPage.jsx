@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useState } from "react";
 import useProjects from "../hooks/use-projects";
 import useUpdateProject from "../hooks/use-update-project";
 import ProjectCard from "../components/ProjectCard";
@@ -15,16 +15,16 @@ function ProjectsPage() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
 
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
   const handleCreateFeedback = () => {
     if (!auth?.user?.is_organization) {
       setFeedbackMessage("You must be logged in as an organisation to create a project.");
       return;
     }
     navigate("/projects/create");
-  };
-
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
   };
   
   // Map numeric category values to category names
@@ -48,31 +48,35 @@ function ProjectsPage() {
     console.log("Filtered Project Data in ProjectsPage:", filteredProjects);
 
   return (
-    <div>
-      <h1>Browse Projects</h1>
-      <p>Browse and pledge to amazing community projects.</p>
+    <div className="projects-page">
+      <header className="projects-header">
+        <h1>Browse Projects</h1>
+        <p>Browse and pledge to amazing community projects.</p>
+      </header>
       
-      <div className="categories">
-        <button
-          className={selectedCategory === "All Categories" ? "active" : ""}
-          onClick={() => handleCategoryClick("All Categories")}
-        >
-          All Categories
-        </button>
+      <section className="categories-section">
+        <div className="categories">
+          <button
+            className={selectedCategory === "All Categories" ? "category-button active" : "category-button"}
+            onClick={() => handleCategoryClick("All Categories")}
+          >
+            All Categories
+          </button>
           {Object.entries(categoryMap).map(([key, value]) => (
             <button
               key={key}
-              className={selectedCategory === value ? "active" : ""}
+              className={selectedCategory === value ? "category-button active" : "category-button"}
               onClick={() => handleCategoryClick(value)}
             >
               {value}
             </button>
           ))}
       </div>
+      </section>
 
-      <h2>{selectedCategory}</h2>
+      <h2 className="category-title">{selectedCategory}</h2>
 
-      <div className="project-list">
+      <section className="project-list">
                 {isLoading && <p>Loading projects...</p>}
                 {error && <p className="error">Error loading projects: {error.message}</p>}
                 {filteredProjects.length > 0 ? (
@@ -86,14 +90,17 @@ function ProjectsPage() {
                 ) : (
                     <p>No projects available for this category.</p>
                 )}
-      </div>
+      </section>
 
       {feedbackMessage && <p className="feedback">{feedbackMessage}</p>}
       
       {auth?.role === "organisation" && (
-        <Link to="/projects/create">
-          <button className="create-project-button" onClick={handleCreateFeedback}>Create New Project</button>
-        </Link>
+        <div className="create-project-container">
+          <Link to="/projects/create">
+            <button className="create-project-button" onClick={(e) => {handleCreateFeedback();
+            }}>Create New Project</button>
+          </Link>
+        </div>
       )}
     </div>
   );

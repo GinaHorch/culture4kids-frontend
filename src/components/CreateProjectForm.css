@@ -1,1 +1,164 @@
-/* to be created */
+.create-project-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem;
+    min-height: 100vh;
+    background-color: rgba(248, 249, 250, 1); /* Light background for readability */
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.8),
+        rgba(255, 255, 255, 0.8)
+    ),
+    url('../assets/Artpaintingimage.webp');
+    background-size: cover;
+    background-position: center;
+    gap: 1rem;
+}
+
+.create-project-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.create-project-header h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #3c2f2f;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.create-project-form {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+    margin: 1.5rem auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+  
+.create-project-form label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-weight: bold;
+    color: #3c2f2f;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+  
+.create-project-form input,
+.create-project-form textarea,
+.create-project-form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.create-project-form input[type="text"],
+.create-project-form input[type="number"],
+.create-project-form input[type="date"],
+.create-project-form select {
+    max-width: 650px;
+}
+  
+.create-project-form input:focus,
+.create-project-form textarea:focus,
+.create-project-form select:focus {
+    outline: 2px solid #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+  
+.create-project-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+  
+.create-project-form input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-top: 10px;
+}
+  
+.create-project-form .checkbox-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    font-weight: bold;
+    color: #3c2f2f;
+  }
+
+.create-project-form input[type="file"] {
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+  
+.create-project-form button {
+    background-color: #3c2f2f;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+  
+.create-project-form button:hover {
+    background-color: #f0c14b;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+  
+.create-project-form button:active {
+    transform: scale(0.98);
+}
+  
+.create-project-form .error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    font-weight: normal;
+    text-align: left;
+  }
+  
+  /* Responsive Design */
+@media (max-width: 768px) {
+    .create-project-form {
+      padding: 20px;
+      max-width: 90%;
+    }
+  
+    .create-project-form label {
+      font-size: 0.9rem;
+    }
+  
+    .create-project-form input,
+    .create-project-form textarea,
+    .create-project-form select {
+      font-size: 0.9rem;
+    }
+  
+    .create-project-form button {
+      font-size: 0.9rem;
+      padding: 10px 15px;
+    }
+  }
+  
