@@ -122,6 +122,9 @@
   font-weight: bold;
   color: #3c2f2f;
   margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .project-pledges ul {

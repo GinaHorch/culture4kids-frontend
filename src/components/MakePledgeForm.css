@@ -1,55 +1,128 @@
+/* General styling for the pledge form */
 .make-pledge-form {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.make-pledge-form h3 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #3c2f2f;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.make-pledge-form label {
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #3c2f2f;
+  text-align: left;
+}
+
+.make-pledge-form input,
+.make-pledge-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.make-pledge-form input:focus,
+.make-pledge-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.make-pledge-form input[type="checkbox"] {
+  display: inline;
+  width: auto;
+  margin-right: 5px;
+  accent-color: #007bff;
+}
+
+.make-pledge-form button {
+  background-color: #3c2f2f;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+}
+
+.make-pledge-form button:hover {
+  background-color: #f0c14b;
+  transform: scale(1.02);
+}
+
+.make-pledge-form button:active {
+  transform: scale(0.98);
+}
+
+/* Login and Signup buttons for unauthenticated users */
+.make-pledge-form .auth-buttons button {
+  margin: 5px 0;
+  background-color: #3c2f2f;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.make-pledge-form .auth-buttons button:hover {
+  background-color: #f0c14b;
+}
+
+.make-pledge-form .error-message {
+  color: #dc3545;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.make-pledge-form .success-message {
+  color: #28a745;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .make-pledge-form {
+    padding: 15px;
   }
-  
+
   .make-pledge-form h3 {
-    margin-bottom: 15px;
-    color: #333;
+    font-size: 1.3rem;
   }
-  
-  .make-pledge-form label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
-  }
-  
+
   .make-pledge-form input,
-  .make-pledge-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 15px;
-  }
-  
+  .make-pledge-form textarea,
   .make-pledge-form button {
-    background-color: #6200ea;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+    font-size: 0.9rem;
   }
-  
-  .make-pledge-form button:hover {
-    background-color: #4500b3;
-  }
-  
-  .error-message {
-    color: red;
-    margin-bottom: 10px;
-  }
-  
-  .success-message {
-    color: green;
-    margin-bottom: 10px;
-  }
-  
+}

@@ -105,21 +105,33 @@ function ProjectPage() {
 
           <section className="project-pledges">
             <h3>Pledges</h3>
-            {/* {project.pledges.length > 0 ? ( */}
             {deleteError && <p className="error-message">{deleteError}</p>}
             {pledges.length > 0 ? (
               <ul>
                 {pledges.map((pledge) => (
                   <li key={pledge.id}>
-                    ${pledge.amount} from {pledge.anonymous ? "Anonymous" : pledge.supporter}
-                    {pledge.supporter_id === auth?.user?.id && ( // Show delete button for the user's own pledges
-                    <button
-                    className="delete-pledge-btn"
-                    onClick={() => handleDeletePledge(pledge.id)}
-                  >
-                    Delete
-                  </button>
-                )}
+                    <div className="pledge-details">
+                      <p>
+                        <strong>Amount:</strong> ${pledge.amount}
+                      </p>
+                      <p>
+                        <strong>Supporter:</strong>{" "}
+                        {pledge.anonymous ? "Anonymous" : pledge.supporter}
+                      </p>
+                      {pledge.comment && (
+                        <p>
+                          <strong>Comment:</strong> {pledge.comment}
+                        </p>
+                      )}
+                    </div>
+                    {pledge.supporter_id === auth?.user?.id && (
+                      <button
+                        className="delete-pledge-btn"
+                        onClick={() => handleDeletePledge(pledge.id)}
+                      >
+                        Delete
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>

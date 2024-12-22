@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import z from "zod";
 import { useAuth } from "../hooks/use-auth";
+import { useNavigate } from "react-router-dom";
 import "./MakePledgeForm.css";
 
 // Define the schema for pledge validation
@@ -10,6 +11,7 @@ const pledgeSchema = z.object({
 
 function MakePledgeForm({ projectId, remainingAmount }) {
   const { auth } = useAuth(); // For user authentication
+  const navigate = useNavigate(); // For navigation
   const [pledgeAmount, setPledgeAmount] = useState("");
   const [comment, setComment] = useState("");
   const [error, setError] = useState(null);
@@ -55,42 +57,56 @@ function MakePledgeForm({ projectId, remainingAmount }) {
   return (
     <div className="make-pledge-form">
       <h3>Make a Pledge</h3>
-      {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">{success}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="amount">Pledge Amount:</label>
-          <input
-            type="number"
-            id="amount"
-            name="amount"
-            value={pledgeAmount}
-            onChange={(e) => setPledgeAmount(e.target.value)}
-            placeholder={`Max: $${remainingAmount}`}
-          />
+      {auth?.token ? (
+        remainingAmount === 0 ? (
+          <p className="error-message">This project is fully pledged.</p>
+        ) : (
+          <div>
+            {error && <p className="error-message">{error}</p>}
+            {success && <p className="success-message">{success}</p>}
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="amount">Pledge Amount:</label>
+                <input
+                  type="number"
+                  id="amount"
+                  name="amount"
+                  value={pledgeAmount}
+                  onChange={(e) => setPledgeAmount(e.target.value)}
+                  placeholder={`Max: $${remainingAmount}`}
+                />
+              </div>
+              <div>
+                <label htmlFor="comment">Comment (optional):</label>
+                <textarea
+                  id="comment"
+                  name="comment"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Add a message to your pledge..."
+                ></textarea>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={isAnonymous}
+                    onChange={(e) => setIsAnonymous(e.target.checked)}
+                  />
+                  Make this pledge anonymous
+                </label>
+              </div>
+              <button type="submit">Submit Pledge</button>
+            </form>
+          </div>
+        )
+      ) : (
+        <div className="auth-buttons">
+          <p className="error-message">You must be logged in to make a pledge.</p>
+          <button onClick={() => navigate("/login")}>Login</button>
+          <button onClick={() => navigate("/signup")}>Sign Up</button>
         </div>
-        <div>
-          <label htmlFor="comment">Comment (optional):</label>
-          <textarea
-            id="comment"
-            name="comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Add a message to your pledge..."
-          ></textarea>
-        </div>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={isAnonymous}
-              onChange={(e) => setIsAnonymous(e.target.checked)}
-            />
-            Make this pledge anonymous
-          </label>
-        </div>
-        <button type="submit">Submit Pledge</button>
-      </form>
+      )}
     </div>
   );
 }
