@@ -56,12 +56,17 @@ Please include the following in your readme doc:
 - [ ] A screenshot of the project creation page
 - [ ] A screenshot of the project creation form
 - [ ] A screenshot of a project with pledges
-- [ ] A screenshot of the resulting page when an unauthorized user attempts to edit a project
+- [ ] A screenshot of the resulting page when an unauthorized user attempts to edit a project. Unauthorised users will not be able to see the Update Project button. Unauthorised users will be prompted to sign in to make a pledge.
 
 ### Screenshots
 ![Homepage](/screenshots/HomePage-top.png)
 ![Homepage](/screenshots/HomePage-bottom.png)
 ![Homepage](/screenshots/HomePage-responsive-burger.png)
+![CreateProject](/screenshots/CreateProjectForm.png)
+![ProjectDetails](/screenshots/ProjectDetails-top.png)
+![ProjectDetails](/screenshots/ProjectDetails-bottom.png)
+![ProjectPledge](/screenshots/ProjectPledge.png)
+![LoginPrompt](/screenshots/LoginPromptToPledge.png)
 
 ### Key take aways
 - Optimistic updates are not so optimistic! After many attempts (2 days) of not so optimistic updates with having to manually refresh the page after updates there is the useNavigation function as alternative.
