@@ -1,48 +1,109 @@
-/* UpdateProject.css */
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.header {
-    font-size: 2em;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.form {
+.update-project-form {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+    margin: 1.5rem auto;
+    text-align: left;
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
 }
 
-.form-group {
-    margin-bottom: 15px;
+.update-project-form h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3c2f2f;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.label {
-    font-size: 1em;
-    margin-bottom: 5px;
+.update-project-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: #3c2f2f;
+    font-size: 1rem;
 }
 
-.input {
+.update-project-form input,
+.update-project-form textarea,
+.update-project-form select {
+    width: 100%;
     padding: 10px;
-    font-size: 1em;
+    font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.button {
-    padding: 10px 20px;
-    font-size: 1em;
-    color: #fff;
-    background-color: #007bff;
+.update-project-form input:focus,
+.update-project-form textarea:focus,
+.update-project-form select:focus {
+    outline: 2px solid #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.update-project-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.update-project-form button {
+    background-color: #3c2f2f;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 12px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: center;
 }
 
-.button:hover {
-    background-color: #0056b3;
+.update-project-form button:hover {
+    background-color: #f0c14b;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.update-project-form button:active {
+    transform: scale(0.98);
+}
+
+.update-project-form .error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
+@media (max-width: 768px) {
+    .update-project-form {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .update-project-form h2 {
+        font-size: 1.5rem;
+    }
+
+    .update-project-form input,
+    .update-project-form textarea,
+    .update-project-form select {
+        font-size: 0.9rem;
+    }
+
+    .update-project-form button {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
 }

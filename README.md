@@ -53,10 +53,10 @@ To submit, fill out [this Google form](https://forms.gle/34ymxgPhdT8YXDgF6), inc
 Please include the following in your readme doc:
 - [X] A link to the deployed project. https://sparkling-torte-d2718c.netlify.app/
 - [X] A screenshot of the homepage
-- [ ] A screenshot of the project creation page
-- [ ] A screenshot of the project creation form
-- [ ] A screenshot of a project with pledges
-- [ ] A screenshot of the resulting page when an unauthorized user attempts to edit a project. Unauthorised users will not be able to see the Update Project button. Unauthorised users will be prompted to sign in to make a pledge.
+- [X] A screenshot of the project creation page
+- [X] A screenshot of the project creation form
+- [X] A screenshot of a project with pledges
+- [X] A screenshot of the resulting page when an unauthorized user attempts to edit a project. Unauthorised users will not be able to see the Update Project button. Unauthorised users will be prompted to sign in to make a pledge.
 
 ### Screenshots
 ![Homepage](/screenshots/HomePage-top.png)
@@ -67,6 +67,7 @@ Please include the following in your readme doc:
 ![ProjectDetails](/screenshots/ProjectDetails-bottom.png)
 ![ProjectPledge](/screenshots/ProjectPledge.png)
 ![LoginPrompt](/screenshots/LoginPromptToPledge.png)
+![UpdateProject](/screenshots/UpdateProjectForm.png)
 
 ### Key take aways
 - Optimistic updates are not so optimistic! After many attempts (2 days) of not so optimistic updates with having to manually refresh the page after updates there is the useNavigation function as alternative.
