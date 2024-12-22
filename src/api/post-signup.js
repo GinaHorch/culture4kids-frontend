@@ -10,16 +10,17 @@ async function postSignup(signupData) {
       body: JSON.stringify(signupData),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.detail || "Signup failed");
-    }
+    const responseData = await response.json();
 
-    // Return the parsed JSON response
-    return await response.json();
+    if (!response.ok) {
+      console.error("API Response:", responseData);
+      throw new Error(responseData.detail || "Signup failed. Please check your input.");
+  }
+
+    return responseData; // Return the parsed JSON response
   } catch (error) {
     console.error("Error during signup:", error);
-    throw error; // Re-throw the error for the SignupForm to handle
+    throw error;
   }
 }
 

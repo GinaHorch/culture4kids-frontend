@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../components/AuthProvider";
 
 export const useAuth = () => {
@@ -7,13 +7,9 @@ export const useAuth = () => {
 
   console.log("Returning auth state and functions from useAuth:", context);
 
-  if (!context || typeof context.login !== "function") {
+  if (!context || typeof context.login !== "function" || typeof context.signup !== "function") {
     throw new Error("useAuth must be used within an AuthProvider");
   }
 
-// `login` is now accessed directly from context.
-
-// Logout is now accessed directly from context.
-
-return context; // Return all context values (auth, login, logout)
+  return context; // Includes auth, login, logout, and signup
 };

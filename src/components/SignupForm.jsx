@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import z from "zod";
 import { useAuth } from "../hooks/use-auth";
+import postSignup from "../api/post-signup";
 
 // Schema validation for signup
 const signupSchema = z.object({
@@ -10,29 +11,54 @@ const signupSchema = z.object({
     password: z.string().min(8, { message: "Password must be at least 8 characters" }),
     confirmPassword: z.string().min(8, { message: "Please confirm your password" }),
     role: z.enum(["user", "organisation"], { message: "Role is required" }),
-    organisation_name: z.string().min(1, { message: "Organisation name is required" }).optional(),
-    organisation_contact: z.string().min(1, { message: "Organisation contact is required" }).optional(),
-    organisation_phone_number: z.string().min(1, { message: "Phone number is required" }).optional(),
-    organisation_ABN: z.string().min(11, { message: "ABN must be at least 11 characters" }).optional(),
+    organisation_name: z.string().optional(),
+    organisation_contact: z.string().optional(),
+    organisation_phone_number: z.string().optional(),
+    organisation_ABN: z.string().optional(),
     is_charity: z.boolean().optional(),
   })
-  .refine(
-    (data) =>
-      data.role === "user" ||
-      (data.role === "organisation" &&
-        data.organisation_name &&
-        data.organisation_contact &&
-        data.organisation_phone_number &&
-        data.organisation_ABN),
-    {
-      message: "All organisation fields are required for organisations",
-      path: ["organisation_name"],
-    }
-  )
-
+  
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must match",
     path: ["confirmPassword"],
+  })
+
+  .superRefine((data, ctx) => {
+    // Conditionally validate organisation fields
+    if (data.role === "organisation") {
+      if (!data.organisation_name) {
+        ctx.addIssue({
+          code: "too_small",
+          minimum: 1,
+          message: "Organisation name is required",
+          path: ["organisation_name"],
+        });
+      }
+      if (!data.organisation_contact) {
+        ctx.addIssue({
+          code: "too_small",
+          minimum: 1,
+          message: "Organisation contact is required",
+          path: ["organisation_contact"],
+        });
+      }
+      if (!data.organisation_phone_number) {
+        ctx.addIssue({
+          code: "too_small",
+          minimum: 1,
+          message: "Phone number is required",
+          path: ["organisation_phone_number"],
+        });
+      }
+      if (!data.organisation_ABN || data.organisation_ABN.length < 11) {
+        ctx.addIssue({
+          code: "too_small",
+          minimum: 11,
+          message: "ABN must be at least 11 characters",
+          path: ["organisation_ABN"],
+        });
+      }
+    }
   });
 
 function SignupForm() {
@@ -62,8 +88,10 @@ function SignupForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("Handle submit triggered");
 
     const result = signupSchema.safeParse(credentials);
+    console.log("Validation result:", result);
 
     if (!result.success) {
       const errorMessages = {};
@@ -75,7 +103,14 @@ function SignupForm() {
     }
 
     // Adjust the payload for organisations
-    const payload = { ...result.data };
+    const payload = {
+      username: credentials.username,
+      email: credentials.email,
+      password: credentials.password,
+      confirm_password: credentials.confirmPassword,
+      role: credentials.role,
+    }
+
     if (payload.role === "organisation") {
       payload.organisation_name = credentials.organisation_name || "";
       payload.organisation_contact = credentials.organisation_contact || "";
@@ -85,14 +120,24 @@ function SignupForm() {
     }
 
     try {
-      // Call postSignup
-      await signup(payload);
-      alert("Signup successful! You can now log in.");
-      navigate("/login");
+      const data = await postSignup(payload);
+      console.log("Payload sent to API:", payload);
+  
+      if (data.token) {
+        // API provides a token: Log the user in immediately
+        await signup(data);
+        alert("Signup successful! You are now logged in.");
+        navigate("/");
+      } else {
+        // API does not provide a token: Redirect to login
+        alert("Signup successful! Please log in to continue.");
+        navigate("/login");
+      }
     } catch (error) {
       setErrors({ api: error.message });
+      console.error("Signup error:", error.message);
     }
-  }; 
+  };
 
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
@@ -165,6 +210,7 @@ function SignupForm() {
               onChange={handleChange}
               autoComplete="organisation"
             />
+            {errors.organisation_name && <span className="error">{errors.organisation_name}</span>}
           </div>
           <div>
             <label htmlFor="organisation_contact">Organisation Contact:</label>
