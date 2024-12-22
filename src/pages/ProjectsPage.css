@@ -3,8 +3,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: 1.5rem;
   min-height: 100vh;
+  box-sizing: border-box;
   background-color: #f9f9f9;
 }
 
@@ -28,9 +29,9 @@
 
 /* Categories */
 .categories-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 100%;
   text-align: center;
 }
 
@@ -47,10 +48,11 @@
   color: #3c2f2f;
   font-size: 1rem;
   font-weight: bold;
-  padding: 10px 20px;
+  padding: 8px 15px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 100px;
 }
 
 .category-button:hover {
@@ -67,13 +69,14 @@
 /* Project List */
 .project-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  padding: 1.5rem 0;
   justify-content: center;
   align-items: start;
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 /* Feedback Message */
@@ -85,15 +88,18 @@
 
 /* Create Project Button */
 .create-project-container {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .create-project-button {
   background: #3c2f2f;
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 1.1rem;
+  padding: 10px 18px;
+  font-size: 1rem;
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
@@ -115,16 +121,47 @@
 }
 
 @media (max-width: 768px) {
+  .projects-page {
+    padding: 1rem;
+  }
+
   .categories {
     flex-wrap: wrap;
+    gap: 8px;
   }
 
   .category-button {
-    font-size: 0.9rem;
-    padding: 8px 15px;
+    font-size: 0.8rem;
+    padding: 6px 12px;
   }
 
   .project-list {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .create-project-button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories {
+    gap: 6px;
+  }
+
+  .category-button {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+
+  .project-list {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .create-project-button {
+    font-size: 0.85rem;
+    padding: 6px 12px;
   }
 }
