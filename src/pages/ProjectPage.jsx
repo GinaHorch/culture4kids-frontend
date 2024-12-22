@@ -71,19 +71,19 @@ function ProjectPage() {
           </header>
           
           <div className="project-info-tile">
-            <p>Title: {project.title}</p>
-            <p>Description: {project.description}</p> 
-            <p>Location: {project.location}</p>
-            <p>Category: {project.category}</p>
-            <p>Target Amount: ${project.target_amount}</p>
-            <p>Total Pledged: ${calculatePledges(project).totalPledges}</p>
-            <p>Remaining: ${calculatePledges(project).remaining}</p>
-            <p>End Date: {new Date(project.end_date).toLocaleDateString()}</p>
-            <p className="project-status">
-            {project.is_open ? "Status: Open for Pledges" : "Status: Closed"}
+            <p><strong>Title:</strong> {project.title}</p>
+            <p><strong>Description:</strong> {project.description}</p> 
+            <p><strong>Location:</strong> {project.location}</p>
+            <p><strong>Category:</strong> {project.category}</p>
+            <p><strong>Target Amount:</strong> ${project.target_amount}</p>
+            <p><strong>Total Pledged:</strong> ${calculatePledges(project).totalPledges}</p>
+            <p><strong>Remaining:</strong> ${calculatePledges(project).remaining}</p>
+            <p><strong>End Date:</strong> {new Date(project.end_date).toLocaleDateString()}</p>
+            <p className={`project-status ${project.is_open ? "open" : "closed"}`}>
+              <strong>Status:</strong> {project.is_open ? "Open for Pledges" : "Closed"}
             </p>  
             <p className="project-date">
-            Created at: {new Date(project.date_created).toLocaleDateString()}    
+            <strong>Created at:</strong> {new Date(project.date_created).toLocaleDateString()}    
             </p>            
             {auth?.role === "organisation" && (
               <>
@@ -102,7 +102,7 @@ function ProjectPage() {
             alt={project.title || "Placeholder image"}
             className="project-main-image"
           />
-          
+
           <section className="project-pledges">
             <h3>Pledges</h3>
             {/* {project.pledges.length > 0 ? ( */}
