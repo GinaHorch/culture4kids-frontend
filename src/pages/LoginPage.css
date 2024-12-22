@@ -17,6 +17,7 @@ body {
   background-position: center;
   padding: 20px;
   position: relative; /* Needed for overlay */
+  width: 100%;
   }
 
 .login-page::before {
@@ -40,7 +41,7 @@ body {
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   text-align: center;
   z-index: 1;
 }
@@ -48,7 +49,8 @@ body {
 .login-container h1,
 .login-container h2,
 .login-container p {
-  color: #343a40;
+  color: #3c2f2f;
+  font-weight: bold;
   z-index: 1; /* Ensure content is above the overlay */
   text-shadow: none
 }
@@ -58,18 +60,25 @@ input[type="text"],
 input[type="password"] {
   display: block;
   width: 100%;
-  max-width: 300px;
+  max-width: 450px;
   padding: 12px;
   margin: 10px auto;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: 2px solid #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .login-container button {
   display: block;
-  background: #007bff;
+  background: #3c2f2f;
   color: white;
   cursor: pointer;
   font-weight: bold;
@@ -77,19 +86,20 @@ input[type="password"] {
   padding: 12px;
   border-radius: 8px;
   border: none;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   width: 100%;
   max-width: 300px;
   margin-top: 10px;
 }
 
 .login-container button:hover {
-  background: #0056b3;
+  background-color: #f0c14b; /* Vibrant accent color on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle elevation effect */
 }
 
 .login-container button:focus {
-  outline: 3px solid #ffffff; /* Added focus outline for accessibility */
-  box-shadow: 0 0 10px rgba(98, 0, 234, 0.8); /* Glow effect for focus */
+  outline: 3px solid #ffffff;
+  box-shadow: 0 0 10px rgba(240, 193, 75, 0.8); /* Highlight for focus */
 }
 
 .login-container button:active {
@@ -99,7 +109,7 @@ input[type="password"] {
 .toggle-form-button {
   background: none;
   border: none;
-  color:#007bff;
+  color: #3c2f2f;
   cursor: pointer;
   font-weight: bold;
   padding: 12px;
@@ -107,19 +117,19 @@ input[type="password"] {
   transition: background-color 0.3s ease, color 0.3s ease;
   margin-top: 10px;
   font-size: 1rem;
-  text-decoration: underline;
+  text-decoration: none;
   width: 100%;
   max-width: 300px;
 }
 
 .toggle-form-button:hover {
   color: #ffffff;
-  background-color: #0056b3; /* Add a solid background color for better readability */
+  background-color: #3c2f2f; /* Add a solid background color for better readability */
 }
 
 .toggle-form-button:focus {
-  outline: 2px solid #ffffff; /* Added focus outline for accessibility */
-  box-shadow: 0 0 5px rgba(98, 0, 234, 0.5); /* Glow effect for focus */
+  outline: 2px solid #ffffff;
+  box-shadow: 0 0 5px rgba(60, 47, 47, 0.5); /* Subtle focus effect */
 }
 
 .toggle-form-button:active {
@@ -139,11 +149,4 @@ input[type="password"] {
       max-width: 100%; /* Allows buttons and inputs to fit smaller screens */
       padding: 10px; /* Adjust padding for smaller screens */
   }
-}
-
-/* Accessibility improvements for input fields */
-input[type="text"]:focus,
-input[type="password"]:focus {
-  outline: 2px solid #007bff; /* Focus ring for better visibility */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }

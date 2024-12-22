@@ -1,0 +1,101 @@
+/* Shared Form Styling */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px; /* Consistent maximum width */
+    text-align: left;
+    z-index: 1;
+    margin: 0 auto;
+  }
+  
+
+.signup-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+.signup-form form div label {
+    display: inline-block;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #3c2f2f;
+  }
+
+  .signup-form h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3c2f2f;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  .signup-form input,
+  .signup-form select {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .signup-form input:focus,
+  .signup-form select:focus {
+    outline: 2px solid #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .signup-form button {
+    background-color: #3c2f2f;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  .signup-form button:hover {
+    background-color: #f0c14b;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .signup-form button:focus {
+    outline: 3px solid #ffffff;
+    box-shadow: 0 0 10px rgba(240, 193, 75, 0.8);
+  }
+  
+  .signup-form button:active {
+    transform: scale(0.97);
+  }
+  
+  @media (max-width: 600px) {
+    .signup-form {
+      width: 90%; /* Responsive width for smaller screens */
+      padding: 15px;
+    }
+  
+    .signup-form input,
+    .signup-form select,
+    .signup-form button {
+      max-width: 100%;
+    }
+  }

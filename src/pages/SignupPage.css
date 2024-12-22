@@ -17,6 +17,7 @@ body {
     background-position: center;
     padding: 20px;
     position: relative; /* Needed for overlay */
+    width: 100%;
   }
 
 .signup-page::before {
@@ -61,7 +62,7 @@ body {
   text-align: left;
   font-size: 1rem;
   font-weight: bold;
-  color: #343a40;
+  color: #3c2f2f;
 }
 
 .signup-page h1,
@@ -114,7 +115,7 @@ body {
 
 /* Button styles */
 .signup-page button {
-    background: #007bff;
+    background: #3c2f2f;
     color: white;
     cursor: pointer;
     font-weight: bold;
@@ -122,7 +123,7 @@ body {
     border: none;
     border-radius: 8px;
     padding: 12px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     width: calc(100% - 20px);
     max-width: 400px;
     margin-top: 10px;
@@ -146,30 +147,32 @@ body {
 }
 
 /* Accessibility and toggle button styles */
-.signup-page .toggle-form-button {
-    background: none;
+.signup-page button {
+    display: block;
+    background: #3c2f2f;
     border: none;
-    color: #007bff;
+    color: white;
     cursor: pointer;
     font-weight: bold;
-    text-decoration: underline;
+    text-decoration: none;
     margin-top: 10px;
     font-size: 1rem;
-}
-
-.signup-page .toggle-form-button:hover {
-    color: #ffffff;
-    background-color: #0056b3;
     padding: 12px;
-    border-radius: 5px;
+    border-radius: 8px;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-.signup-page .toggle-form-button:focus {
+.signup-page button:hover {
+    background-color: #f0c14b; /* Vibrant accent color on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle elevation effect */
+}
+
+.signup-page button:focus {
     outline: 2px solid #ffffff;
-    box-shadow: 0 0 5px rgba(98, 0, 234, 0.5);
+    box-shadow: 0 0 10px rgba(240, 193, 75, 0.8); /* Highlight for focus */
 }
 
-.signup-page .toggle-form-button:active {
+.signup-page button:active {
     transform: scale(0.97);
 }
 
@@ -179,9 +182,9 @@ body {
         width: 90%;
     }
 
-    .signup-page input,
-    .signup-page button,
-    .signup-page .toggle-form-button {
+    .signup-page div input,
+    .signup-page div select,
+    .signup-page button {
         max-width: 100%;
     }
 }

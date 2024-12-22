@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/LoginForm"; // Your existing LoginForm
 import { useAuth } from "../hooks/use-auth.js"; // Hook to check login state
 import "./LoginPage.css"; // Custom styling for login/signup forms
+import "../components/SignupForm.css"; // Reuse SignupForm styling
 import SignupForm from "../components/SignupForm";
 
 function LoginPage() {
@@ -47,9 +48,9 @@ function LoginPage() {
             <LoginForm />
           </div>
         ) : (
-          <div>
-            <h1>Sign up</h1>
-            <SignupForm /> // Assuming you have a SignupForm component
+          <div className="signup-form">
+            <h1>Sign Up</h1>
+            <SignupForm />
           </div>
         )}
         <p>
