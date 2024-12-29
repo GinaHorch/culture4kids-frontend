@@ -45,7 +45,7 @@ You can browse projects by category
         
     ### Anyone who is signed in can make pledges, however, you can choose to be anonymous.
 
-    ### I have not yet invested in cloud options, so uploaded project images are not stable and disappear eventually.
+    ### I am in the process of making changes to the backend to use AWS buckets to ensure image uploads are stable and not just temporarily in the frontend. However, I am encountering issues with static file uploads and media file uploads. I am working on it ...
 
     ### I am only using useEffect to visually grey out the Make a Pledge section when the project is closed. I have not added an API call to update the project on the backend.
 
