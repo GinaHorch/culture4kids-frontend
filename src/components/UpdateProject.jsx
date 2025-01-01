@@ -18,7 +18,7 @@ function UpdateProject({ project }) {
     console.log("UpdateProject.jsx - project from useProject:", project);
     const { currentProject, isLoading } = useProject(id, projects, updateProjectLocally);
     console.log("UpdateProject.jsx - currentProject from useProject:", currentProject);
-    const { updateProject, isUpdating, error } = useUpdateProject(updateProjectLocally);
+    const { updateProject, isUpdating, error: updateError } = useUpdateProject(updateProjectLocally);
     console.log("UpdateProject.jsx - updateProject from useUpdateProject:", updateProject);
     const { auth } = useAuth();
     console.log("Auth object from useAuth hook:", auth);
@@ -33,6 +33,8 @@ function UpdateProject({ project }) {
         end_date: project.end_date || "",
         category: project.category || "",
     });
+
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -69,6 +71,13 @@ function UpdateProject({ project }) {
             updateProjectImageUrl(id, formData.image);
           } catch (err) {
             console.error("Error updating project:", err);
+
+            // Handle errors from the API
+            if (err.response && err.response.data) {
+                setError(err.response.data.detail || "An error occurred while updating the project.");
+            } else {
+                setError("An unexpected error occurred. Please try again.");
+            }
         }
     };
         
