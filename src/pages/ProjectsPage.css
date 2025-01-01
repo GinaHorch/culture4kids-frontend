@@ -69,7 +69,7 @@
 /* Project List */
 .project-list {
   display: grid;
-  grid-template-columns: repeat(auto-fll, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
   padding: 1.5rem 0;
   justify-content: center;
